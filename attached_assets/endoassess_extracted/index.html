@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EndoAssess AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom gradient classes for the vibrant theme */
+        .btn-gradient {
+          background-image: linear-gradient(to right, #d946ef 0%, #8b5cf6 51%, #d946ef 100%);
+          transition: 0.5s;
+          background-size: 200% auto;
+        }
+        .btn-gradient:hover {
+          background-position: right center; /* Change the direction of the gradient shift */
+        }
+        .header-gradient {
+           background: linear-gradient(to right, #c026d3, #ef4444);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .progress-gradient {
+            background-image: linear-gradient(to right, #a855f7, #ec4899);
+        }
+        .chatbot-header-gradient {
+            background-image: linear-gradient(to right, #8b5cf6, #d946ef);
+        }
+        .user-message-gradient {
+            background-image: linear-gradient(to right, #a855f7, #ec4899);
+        }
+        
+        /* Custom slider styles for vibrancy */
+        input[type="range"].vibrant-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #e5e7eb; /* Light gray track */
+            outline: none;
+            opacity: 0.9;
+            transition: opacity .2s;
+        }
+        input[type="range"].vibrant-slider:hover {
+            opacity: 1;
+        }
+        input[type="range"].vibrant-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-image: linear-gradient(to right, #d946ef, #8b5cf6);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        input[type="range"].vibrant-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-image: linear-gradient(to right, #d946ef, #8b5cf6);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.16.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "jspdf": "https://aistudiocdn.com/jspdf@^3.0.2"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-purple-50 to-orange-50 text-slate-800">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "EndoAssess AI",
+  "description": "A comprehensive web application for endometriosis symptom assessment with AI-powered questioning, speech integration, and medical report generation.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
