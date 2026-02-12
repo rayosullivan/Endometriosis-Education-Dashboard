@@ -1,0 +1,463 @@
+Endometriosis Education Platform with Clinician Dashboard and RAG Patient Assistant
+Executive summary
+Prof.Ray, an endometriosis information and education platform that includes a clinician-facing dashboard plus a retrieval-augmented generation (RAG) patient assistant should be designed as a regulated-health, safety-critical information system, even if the initial product positioning is “education” rather than “diagnosis.” This is because the moment the assistant performs symptom triage, risk scoring, or escalation, it begins to influence health decisions and therefore triggers higher expectations for clinical safety engineering, auditability, and human oversight. Under the EU AI Act, AI systems used for emergency healthcare patient triage are explicitly highlighted as high-risk in critical, life-and-health situations, and high-risk system requirements emphasise risk management, logging, transparency, human oversight, and robustness. 
+
+A robust reference architecture has three separations that reduce both risk and complexity:
+
+Content governance plane (clinician dashboard): authoring, upload, metadata, structured review, versioning, and publication control—aligned to guideline-based content such as the Endometriosis: diagnosis and management (NG73) and the ESHRE Guideline: Endometriosis (2022), plus Irish pathways in A National Framework for the Management of Endometriosis in Ireland. 
+
+Retrieval plane (RAG ingestion + indexing): a secure ingestion pipeline for URLs/PDFs/Word documents, metadata extraction, chunking, embeddings, vector indexing, and refresh policies; designed to constrain generation to retrieved sources and to return citation-backed answers—a design direction consistent with the original RAG framing that retrieval helps with provenance and updating knowledge. 
+
+Safety and compliance plane (cross-cutting): GDPR-by-design data minimisation, consent capture, data subject rights handling, DPIA, and security controls; plus AI Act-aligned logging, human oversight, user transparency (“you are interacting with an AI system”), and staff AI literacy. 
+
+The most defensible “MVP” profile is to store only first name + email (as requested) and keep all symptom narrative and chat content ephemeral by default, with explicit opt-in if patients want to save a symptom diary or generate a GP note. This maps cleanly to GDPR principles of purpose limitation and data minimisation, while still allowing the assistant to deliver 24/7 Q&A and structured questionnaires. 
+
+Clinical and product requirements
+Endometriosis is a chronic condition with wide-ranging symptom burden and quality-of-life impact; authoritative sources emphasise pain, bleeding and fertility impacts, and the need for timely access to care. 
+ Diagnostic delay remains a persistent problem in the literature, supporting product features that help women organise symptoms, recognise patterns, and communicate effectively with primary care. 
+
+From a product-scoping standpoint, the safest framing is:
+
+Patient assistant: education, navigation of care pathways, symptom journaling, questionnaire delivery, and preparation of a GP summary—while avoiding diagnostic claims and clearly routing emergencies to urgent services. This aligns with guideline advice to use symptom diaries and to suspect endometriosis with specific symptom clusters (cyclical pelvic, bowel, urinary symptoms, dyspareunia, infertility association). 
+Clinician dashboard: a controlled publishing pipeline for content bundles (guidelines, local Irish pathways, clinic-specific leaflets), with traceable sign-off and versioning—so the assistant’s retrieval corpus stays clinically curated and defensible. 
+Ireland pathway awareness: the Irish national framework describes a structured continuum of care beginning in primary care and defines access criteria across care levels; incorporating this into both retrieval and the GP note output makes the platform immediately more locally actionable. 
+A key regulatory nuance: if the platform’s “intended purpose” shifts toward clinical decision support (e.g., “this score indicates likely endometriosis” or “triage category”), EU medical device software guidance treats the manufacturer’s intended purpose and promotional claims as central to qualification and classification, and explicitly notes that software guidance applies to apps operating on mobile or cloud platforms. 
+
+Reference system architecture
+Overall architecture and data flows
+mermaid
+Copy
+flowchart LR
+  subgraph Client
+    P[Patient Web/Mobile UI]
+    C[Clinician Dashboard UI]
+  end
+
+  subgraph Edge
+    WAF[WAF + DDoS + Rate Limit]
+    API[API Gateway]
+    AUTH[OIDC Auth / MFA]
+  end
+
+  subgraph AppServices
+    CMS[Content Mgmt Service]
+    INGEST[RAG Ingestion Service]
+    RAGQ[RAG Query Orchestrator]
+    QNN[Questionnaire & Scoring Service]
+    NOTE[GP Note Generator Service]
+    NOTIF[Notifications: Email/SMS/In-app]
+    SAFETY[Safety Rules Engine\n(red flags + escalation)]
+  end
+
+  subgraph DataStores
+    RDB[(Relational DB\nusers, consent, questionnaires)]
+    OBJ[(Object Store\nPDF/DOCX originals + parsed text)]
+    VEC[(Vector Index\nchunks + embeddings)]
+    LOG[(Audit + Model Logs\nappend-only)]
+    MET[(Metrics/Tracing)]
+  end
+
+  subgraph ExternalAI
+    EMB[Embedding Model API or Self-host]
+    LLM[LLM Inference API or Self-host]
+  end
+
+  P --> WAF --> API --> AUTH
+  C --> WAF --> API --> AUTH
+
+  API --> CMS
+  API --> RAGQ
+  API --> QNN
+  RAGQ --> SAFETY
+  SAFETY --> NOTIF
+
+  CMS --> RDB
+  CMS --> OBJ
+
+  C --> CMS
+  CMS --> INGEST
+  INGEST --> OBJ
+  INGEST --> EMB --> VEC
+
+  P --> RAGQ
+  RAGQ --> VEC
+  RAGQ --> LLM
+  RAGQ --> NOTE
+  NOTE --> LLM
+
+  RAGQ --> RDB
+  QNN --> RDB
+
+  API --> LOG
+  RAGQ --> LOG
+  INGEST --> LOG
+  SAFETY --> LOG
+  LOG --> MET
+This architecture supports two primary workflows:
+
+Clinician content workflow (governed ingestion): upload or register a URL → malware/SSRF-safe fetch → text extraction (PDF/DOCX/HTML) → metadata extraction → chunking → embeddings → vector index update → publication of a “corpus version” for the assistant. Secure, versioned content pipelines are a practical way to meet transparency and traceability expectations for higher-risk uses. 
+
+Patient Q&A workflow (RAG with safety gating): user query → red-flag and intent detection → retrieval (top-k) → answer synthesis constrained to the retrieved context → citations returned (document title + section + date) → if threshold triggers fire, provide escalation instructions and optionally notify clinicians. RAG-style systems were proposed to improve factuality and provenance by grounding generation on an external knowledge index. 
+
+RAG ingestion of URLs/PDF/Word
+A defensible ingestion pipeline should implement:
+
+Acquisition controls: allow-list domains for URL ingestion; block link-local and private IP ranges to prevent SSRF; enforce timeouts and content-length limits; and store the fetched artifact immutably with hash and timestamp for provenance. SSRF and insecure design are mainstream web risks; prompt-injection and data exfiltration are now prominent GenAI app risks. 
+Malware scanning: scan every uploaded PDF/DOCX and fetched payload before parsing; quarantine on detection; log outcomes. (In regulated health contexts, this is “table stakes” rather than optional.) 
+Parsing and normalisation: convert to a canonical text+structure representation (headings, tables, lists), preserving page numbers and section anchors for citations.
+Metadata extraction: authoring organisation, publication date, jurisdiction (Ireland/UK/EU), document type (guideline, patient leaflet), evidence strength tags, and “expiry/review date.”
+Chunking: semantic chunking aligned to headings; with overlap; chunk IDs stable across re-ingestions where possible to reduce embedding churn.
+Indexing: store chunks in a vector store plus a sparse index (BM25) for hybrid retrieval where needed, especially for acronyms and medication names.
+Refresh policies: scheduled recrawl for URLs, and clinician-triggered “reindex now,” with a corpus version bump and rollback capability.
+Model orchestration, logging and auditability
+Given the EU AI Act’s emphasis on record-keeping/logs for high-risk systems and lifecycle risk management, the platform should treat model logs as a first-class system of record—capturing prompts, retrieved sources, model versions, safety-rule outcomes, and user-visible outputs in a controlled way. 
+ In practice, this means:
+
+Orchestrator-managed prompts (not user-composed), and a strict separation between user message, retrieved context, and system instructions.
+Tamper-evident logging: append-only logs with access control and integrity protection; retention aligned to purpose (e.g., safety incident investigation). High-risk systems must support traceability through logging. 
+Human oversight hooks: clinician review queues for flagged interactions and a mechanism to “stop” or override automated behaviour, aligning with the AI Act’s requirement to enable human oversight and mitigate automation bias. 
+Clinician dashboard and patient assistant UX
+Clinician dashboard capabilities
+A clinician dashboard is the operational control point for both clinical correctness and medico-legal defensibility. The following features are high-leverage:
+
+Content upload and provenance
+
+Upload PDF/DOCX, paste text, or register a URL with allow-list enforcement.
+Auto-extract: title, headings, page markers, references, publication date, and jurisdiction tags.
+Provenance fields: “source type” (guideline, local leaflet), “owner,” “import method,” and SHA-256 hash.
+Metadata, versioning and lifecycle
+
+Content item versioning (v1, v2…) and corpus release versioning (corpus-2026-02-01).
+“Effective date” and “review-by date” to enforce refresh (NICE updates and local frameworks change; HSE pages also have review dates). 
+Rollback to prior corpus on detected errors.
+Review workflows
+
+Draft → clinical review → sign-off → publish, with role-based signatories and required two-person rule for certain content classes (e.g., triage thresholds). This echoes safety culture expectations even where not formally mandated. 
+“Change request” mechanism and paper-trail: who changed what, why, and which evidence supported it.
+Access controls
+
+Role-based access control (RBAC): author, reviewer, publisher, auditor, admin. OWASP emphasises broken access control as a leading web risk and RBAC is a standard mitigation. 
+Tenant isolation if multiple clinics/organisations are served.
+Patient assistant UX requirements
+Tone and interaction model
+
+The assistant should default to: brief empathy, clarity, non-judgment, and a consistent pattern: reflect → answer with citations → suggest next step → safety check. Endometriosis guidance emphasises the condition’s long-term physical and psychosocial impacts and the need to tailor information to the individual’s circumstances and priorities. 
+
+Transparency and expectations
+
+Up-front: “You are interacting with an AI system,” consistent with AI Act transparency obligations for AI systems intended to interact directly with natural persons. 
+Always-visible: “Not a substitute for a clinician; emergencies go to 112/999.”
+Red-flag recognition and escalation
+
+A practical approach is a two-stage safety layer:
+
+Rule-based “hard stops” (deterministic triggers): pregnancy + abdominal/pelvic pain and/or bleeding; fainting/collapse; sudden severe abdominal pain; vomiting blood; inability to pass urine or stool/gas; severe pain with peritonism cues; sepsis cues; etc. Irish public guidance for severe abdominal pain includes ED attendance for sudden/severe onset, blood in vomit/stool, inability to pass urine or stool/gas, and breathing/chest pain emergencies. 
+ For early pregnancy, NICE explicitly lists ectopic pregnancy symptom patterns including abdominal/pelvic pain, missed period, bleeding, and syncope, supporting conservative escalation when pregnancy is possible. 
+
+Model-assisted “soft flags” (probabilistic): escalating pain trajectories, bowel obstruction warning patterns, urinary obstruction narratives, or severe mental distress; these route to additional questions and may create a clinician alert depending on the user’s consent settings.
+
+Escalation workflow design
+
+If hard-stop: show emergency instruction, suppress routine educational output, and (if consented) trigger a clinician notification with the user’s minimal details and the risk trigger.
+If soft-flag: ask 3–5 clarifying questions, then either (a) advise urgent care, or (b) proceed with educational content plus GP note generation.
+Under the AI Act, systems must be designed so that humans can monitor, interpret, and override outputs and avoid automation bias—so escalation must be auditable and clinician-overridable. 
+
+Questionnaire delivery, scoring, GP note generation
+
+Questionnaire items should reflect guidelines and validated measures where possible. NICE recommends symptom diaries to support discussion. 
+For endometriosis-specific quality-of-life measurement, the Endometriosis Health Profile instruments (EHP-30/EHP-5) are widely discussed in the literature but may have licensing requirements; if used, the platform should store the user’s permissions and the exact instrument version used. 
+Scoring should be deterministic where possible (to reduce variability and medico-legal ambiguity), with the LLM used for interpretation and summarisation—not for arithmetic.
+
+Data model and schemas
+Minimal MVP schema (current plan)
+Goal: enable account creation and optional communications with minimal personal data.
+
+Table	Key fields	Notes
+users	user_id (UUID), first_name, email, created_at, status	Minimal identity only (as requested).
+consent_records	consent_id, user_id, consent_type, granted, timestamp, policy_version, capture_method	Explicit consent capture and versioning.
+
+This approach supports data minimisation and purpose limitation as core GDPR principles, especially when sensitive health content is not stored by default. 
+
+Extended endometriosis database schema (future)
+Goal: support longitudinal symptom tracking, structured questionnaires, treatments, investigations, provenance, and consent flags.
+
+Table	Key fields (illustrative)	Purpose
+patient_profile	patient_id, user_id, DOB_year, sex_at_birth, gender_identity, postcode_prefix, country, created_at	Demographics with minimised granularity (e.g., postcode prefix).
+consent_records	consent_id, patient_id, scope_flags, granted, timestamp, policy_version, withdrawal_timestamp	Consent by scope (care, research, analytics, clinician sharing).
+symptom_event	symptom_id, patient_id, event_date, pain_score_0_10, bleeding_score, bowel_symptoms, urinary_symptoms, dyspareunia_flag, free_text, provenance	Daily/episodic symptom capture with provenance.
+questionnaire_instance	q_instance_id, patient_id, questionnaire_code, version, delivered_at, completed_at	Tracks which instrument/version was used.
+questionnaire_response	q_instance_id, item_code, response_value, response_unit, captured_at	Normalised item-level data for scoring and analytics.
+treatment	treatment_id, patient_id, category, name, start_date, end_date, response, adverse_effects, provenance	Medical/hormonal/pain management and outcomes.
+surgery	surgery_id, patient_id, procedure_type, date, findings_summary, staging_system, complications, facility_level	Surgical history; link to staging systems if used.
+investigation	investigation_id, patient_id, type, date, key_findings, report_doc_id	Imaging/labs; link to source report.
+clinician_note	note_id, patient_id, note_type, generated_by_ai_flag, content, created_at, reviewed_by_clinician	GP note drafts and review status.
+content_item	content_id, title, source_org, jurisdiction, version, status, published_at	Governed knowledge corpus entries.
+rag_chunk	chunk_id, content_id, chunk_text, page_anchor, embedding_ref, checksum	Retrieval unit with stable anchors for citation.
+assistant_interaction	interaction_id, patient_id, timestamp, intent, retrieved_sources, safety_flags, output_hash	Auditability and safety investigations.
+
+This design aligns with the AI Act’s expectation that high-risk systems implement record-keeping/logs and lifecycle risk management, and with GDPR accountability expectations in regulated processing. 
+
+Sample JSON Schema (key tables + consent record)
+json
+Copy
+{
+  "$id": "https://example.org/schemas/user.json",
+  "type": "object",
+  "required": ["user_id", "first_name", "email", "created_at"],
+  "properties": {
+    "user_id": { "type": "string", "format": "uuid" },
+    "first_name": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "email": { "type": "string", "format": "email", "maxLength": 254 },
+    "created_at": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["active", "suspended", "deleted"] }
+  }
+}
+json
+Copy
+{
+  "$id": "https://example.org/schemas/consent_record.json",
+  "type": "object",
+  "required": ["consent_id", "subject_id", "policy_version", "granted", "captured_at", "capture_method", "scopes"],
+  "properties": {
+    "consent_id": { "type": "string", "format": "uuid" },
+    "subject_id": { "type": "string", "format": "uuid", "description": "user_id or patient_id depending on stage" },
+    "policy_version": { "type": "string", "maxLength": 40 },
+    "granted": { "type": "boolean" },
+    "captured_at": { "type": "string", "format": "date-time" },
+    "withdrawn_at": { "type": ["string", "null"], "format": "date-time" },
+    "capture_method": { "type": "string", "enum": ["checkbox_ui", "signed_form_upload", "api", "clinician_entry"] },
+    "scopes": {
+      "type": "object",
+      "required": ["account", "saved_chat", "saved_symptoms", "gp_note_export", "clinician_sharing", "research", "analytics"],
+      "properties": {
+        "account": { "type": "boolean" },
+        "saved_chat": { "type": "boolean" },
+        "saved_symptoms": { "type": "boolean" },
+        "gp_note_export": { "type": "boolean" },
+        "clinician_sharing": { "type": "boolean" },
+        "research": { "type": "boolean" },
+        "analytics": { "type": "boolean" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "ip_prefix": { "type": "string" },
+        "user_agent_hash": { "type": "string" },
+        "ui_language": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}
+json
+Copy
+{
+  "$id": "https://example.org/schemas/symptom_event.json",
+  "type": "object",
+  "required": ["symptom_id", "patient_id", "event_date", "created_at", "provenance"],
+  "properties": {
+    "symptom_id": { "type": "string", "format": "uuid" },
+    "patient_id": { "type": "string", "format": "uuid" },
+    "event_date": { "type": "string", "format": "date" },
+    "pain_score_0_10": { "type": ["integer", "null"], "minimum": 0, "maximum": 10 },
+    "bleeding_score": { "type": ["string", "null"], "enum": ["none", "spotting", "light", "moderate", "heavy", null] },
+    "bowel_symptoms": { "type": ["array", "null"], "items": { "type": "string" } },
+    "urinary_symptoms": { "type": ["array", "null"], "items": { "type": "string" } },
+    "dyspareunia_flag": { "type": ["boolean", "null"] },
+    "free_text": { "type": ["string", "null"], "maxLength": 4000 },
+    "created_at": { "type": "string", "format": "date-time" },
+    "provenance": {
+      "type": "object",
+      "required": ["source"],
+      "properties": {
+        "source": { "type": "string", "enum": ["patient_entry", "assistant_structured", "clinician_import"] },
+        "source_ref": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
+Governance, compliance, security, and clinical safety
+GDPR design choices
+The platform will process personal data, and if symptom or questionnaire data is stored it becomes “special category” health data requiring additional protections and a valid Article 9 condition; Irish regulator guidance highlights health data as special category data. 
+
+A GDPR-by-design posture for this platform typically includes:
+
+Lawful basis (Article 6): commonly contract (to provide the service) and/or consent (for optional saved chat, symptom diary, sharing with clinicians, research). Consent must be freely given, specific, informed and withdrawable; EDPB guidance provides detailed expectations around valid consent. 
+Special category condition (Article 9): for stored symptom and treatment data, rely on explicit consent unless the system is deployed under a clinical care arrangement where another condition may apply (implementation-specific). 
+Data minimisation & purpose limitation: store only what is needed, keep optional health data off by default, and avoid using patient content to improve models unless explicitly opted in. These principles are emphasised in EU guidance on GDPR principles. 
+Data subject rights operationalisation: implement workflows for access and erasure requests; the Irish regulator provides practical descriptions of rights such as access and erasure. 
+DPIA: given health data and novel technology, a DPIA is strongly indicated; the EDPB maintains DPIA materials and Irish regulator materials list processing types requiring DPIAs in practice. 
+Retention & deletion: configure retention by data class (e.g., chat logs 0 days by default; saved GP notes 12 months unless user deletes; audit logs longer if needed for safety incident investigation). This must be stated clearly at consent capture. 
+Pseudonymisation/anonymisation: separate identifiers (user_id) from clinical records (patient_id), and use keyed hashes for analytics where possible.
+EU AI Act implications
+If the assistant is used for symptom triage or escalation in a way that affects critical health decisions, the system design should assume it will be scrutinised under the AI Act’s high-risk framing for emergency healthcare patient triage systems. 
+ Even where the initial product position is “education,” your engineering controls can be aligned early to the Act’s core high-risk requirements:
+
+Risk management system: continuous lifecycle risk management, testing against predefined metrics and thresholds, and post-market monitoring inputs. 
+Data governance: ensure training/validation/testing datasets (if you train) are relevant, representative, and bias-managed; even if you do not train models, this logic translates to safe corpus governance and evaluation datasets. 
+Record-keeping/logging: automatic logs over the system lifetime to support traceability. 
+Transparency: provide clear instructions and performance limitations to deployers, and user-facing transparency that they are interacting with an AI system. 
+Human oversight: design so natural persons can monitor, interpret, override, and stop the system, with explicit attention to automation bias. 
+Accuracy/robustness/cybersecurity: consistent performance and resilience to attacks (including dataset poisoning and adversarial behaviours). 
+AI literacy: ensure staff using/operating the system have sufficient AI literacy. 
+The Irish Government’s timeline notes that rules on Annex III high-risk use cases apply from August 2026, so building compliance workstreams into the roadmap is prudent. 
+
+Security controls
+A healthcare information platform should apply layered security controls spanning application, data, and AI-specific threats:
+
+Encryption: TLS in transit; encryption at rest for DB/object store; and key management with separation of duties. 
+Access control: RBAC, MFA for clinicians, least privilege service accounts, and tenant isolation. OWASP highlights broken access control as a primary web risk. 
+Audit logs: append-only, protected audit trails for content changes, consent updates, clinician access, and AI interactions—supporting traceability expectations. 
+Secure ingestion: SSRF prevention for URL ingestion, malware scanning, and content-type validation. 
+GenAI threat controls: prompt injection defences, retrieval allow-lists, output filtering for unsafe advice, and protections against sensitive information disclosure—aligned with OWASP’s LLM risk framing. 
+Clinical safety and medico-legal disclaimers
+A clinical safety case for the assistant needs three artefacts:
+
+Red-flag definitions: encoded determinants (pregnancy possible + pain/bleeding; sudden severe abdominal pain; fainting; blood in vomit/stool; inability to pass urine or stool/gas). Irish public guidance supports ED attendance for many of these severe abdominal scenarios. 
+Triage thresholds and escalation rules: deterministic rules plus limited model-assisted interpretation; all escalations must be explainable (“triggered because: X+Y”).
+Escalation workflows and documentation: user-facing emergency guidance; clinician notification only with explicit consent and clear response expectations (e.g., “this is not monitored in real time unless explicitly stated”).
+The assistant should present a concise disclaimer at every encounter: it provides educational information; it cannot diagnose; and urgent symptoms require urgent services. For UK/Irish pregnancy-related severe pain/bleeding, NHS/HSE messaging supports contacting maternity units and calling emergency services for severe symptoms, reinforcing conservative escalation logic. 
+
+RAG specifics, option comparisons, and roadmap
+RAG retrieval design and hallucination mitigation
+Recommended retrieval stack (increasing safety and answer quality):
+
+Hybrid retrieval (sparse + dense): improve recall for clinical terms and acronyms.
+Reranking (cross-encoder or quality reranker): reduce “semantic near misses.”
+Citation enforcement: every clinical claim in the answer must have at least one retrieved citation; if retrieval confidence is low, the assistant must say it cannot answer from the approved corpus and suggest next steps.
+Answer templates: demote free-form synthesis; prefer structured outputs (what it is, why it happens, options, when to seek care).
+Corpus version pinning: each answer records which corpus version was used, supporting traceability and post-incident review. Logs and event recording are central to high-risk expectations. 
+Comparison tables: vector stores, embeddings, and LLM hosting
+Vector store options
+
+Option	Pros	Cons	EU data residency notes
+PostgreSQL + pgvector	Simple architecture (vectors + clinical data together); transactional; mature ops; supported by major cloud Postgres offerings. 
+Less specialised ANN performance than dedicated vector DBs at very large scale; tuning needed.	Strong: self-host or run Postgres in EU regions on major clouds.
+Pinecone (managed)	Fully managed vector DB; clear region choices including AWS eu-west-1 (Ireland) and GCP europe-west4 (Netherlands) listed in docs. 
+Vendor dependency; cost at scale; compliance depends on contract/DPA.	Good if EU region selected; confirm processing/subprocessors per DPA.
+Zilliz Cloud (managed Milvus)	Managed Milvus; public emphasis on EU deployments including Ireland region availability and EU data residency options. 
+Vendor dependency; feature set differs from others; confirm controls and audit logs.	Good if cluster is created in EU regions; document region in DPIA.
+
+Embedding options
+
+Option	Pros	Cons	EU data residency notes
+OpenAI API embeddings	High quality; strong data controls documentation; “data sent to API not used for training unless opted-in.” 
+Cross-border considerations depend on residency settings/eligibility; vendor risk.	OpenAI indicates data residency options for eligible customers; confirm contractually. 
+Hyperscaler-managed embeddings (Azure/AWS/GCP)	Enterprise controls; strong statements that prompts/outputs are not used to train without permission (service-dependent). 
+Model choice may be constrained by region; additional configuration for zero retention.	Strong: deploy in EU regions; verify “processing occurs in region” guarantees (GCP documents regional processing guarantees for Vertex AI GenAI). 
+Self-host open-source embeddings	Maximum control; no third-party data transfer; deterministic deployment and auditing.	Requires GPU ops; model updates and security patching become your burden.	Strongest: run in EU data centers; easier to prove residency.
+
+LLM options for the assistant
+
+Option	Pros	Cons	EU data residency notes
+Azure-hosted model endpoints	Enterprise privacy posture; Microsoft documentation states prompts/completions not used to train and not available to other customers/providers without permission. 
+Region availability varies; “zero data retention” can be gated. 
+Strong if deployed in EU geographies; document in DPIA and vendor DPA. 
+Amazon Bedrock	AWS docs state Bedrock doesn’t use prompts/completions to train AWS models and doesn’t distribute to third parties. 
+Model availability differs by region; service configuration complexity.	Good if EU region is selected; document service region and encryption measures. 
+Self-host open-source LLM	Maximum control; can enforce strict logging and isolation; supports offline/air-gapped scenarios.	Highest operational cost; safety tuning and evaluation become your responsibility.	Strongest for residency; still requires robust governance and monitoring under AI Act principles. 
+
+Sample prompt templates
+RAG retrieval (patient-facing answer with citations)
+
+text
+Copy
+SYSTEM:
+You are EndoAssist, an educational assistant for endometriosis. You must:
+- Provide health information only from the supplied CONTEXT.
+- Cite sources by listing (DocumentTitle | Section/Page | Date) after each key claim.
+- If the CONTEXT is insufficient, say so and suggest safe next steps (e.g., talk to GP).
+- Never diagnose. Never provide emergency care instructions unless a RED_FLAG is present.
+
+STYLE:
+Calm, respectful, concise empathy (one sentence maximum), then structured answer:
+1) What this might relate to (education only)
+2) Common explanations (from context)
+3) What people often do next (from context)
+4) When to seek urgent care (only if RED_FLAG=true)
+
+INPUTS:
+- USER_QUESTION
+- CONTEXT_SNIPPETS (each includes title, page/section, date, text)
+- RED_FLAG (true/false)
+- LOCALE (Ireland/UK)
+
+ASSISTANT:
+Return:
+- Answer (max 220 words)
+- Sources (bulleted list, no URLs)
+Questionnaire scoring (deterministic scoring + narrative interpretation)
+
+text
+Copy
+SYSTEM:
+You convert questionnaire responses into:
+(a) a structured scoring JSON (no free text),
+(b) a short interpretation paragraph (education only).
+
+RULES:
+- Do NOT invent responses.
+- If required responses are missing, mark them missing and do not compute that subscore.
+- Scoring arithmetic must exactly follow SCORING_SPEC provided.
+- Do not diagnose; provide "share with your GP" guidance.
+
+INPUTS:
+- QUESTIONNAIRE_CODE, VERSION
+- RESPONSES (item_code -> response_value)
+- SCORING_SPEC (explicit rules)
+OUTPUT:
+1) JSON with subscores, totals, missing_items
+2) 120-word interpretation paragraph
+GP note generation (patient-controlled export draft)
+
+text
+Copy
+SYSTEM:
+Draft a GP note from the provided structured data. The note must:
+- Be factual and patient-reported.
+- Include symptom duration, cyclical pattern, severity, impact on function.
+- Include relevant negatives if provided.
+- Include red flags if detected (and that urgent care advice was given).
+- End with: "Generated with an AI assistant from patient-reported data; please clinically assess."
+
+FORMAT:
+- Patient details: First name, Email (if provided)
+- Summary
+- Key symptoms (bullets)
+- Timeline
+- Relevant history: treatments tried, surgeries, investigations
+- Patient goals (pain control / fertility / both)
+- Requested action (assessment, referral criteria discussion)
+
+INPUTS:
+- PATIENT_PROFILE (minimal)
+- SYMPTOM_SUMMARY
+- QUESTIONNAIRE_SCORES
+- TREATMENTS_TRIED
+- RED_FLAGS
+OUTPUT:
+Plain text note
+Prioritised roadmap and compliance milestones
+Phase 1: Safety-first MVP (education + minimal identity)
+
+Account creation (first name + email), consent capture, and content library browsing.
+Clinician dashboard: upload, metadata, versioning, publish workflow.
+RAG assistant: citation-backed answers limited to curated corpus; no saving of chats by default.
+Core security: RBAC, MFA for clinicians, encryption, audit logs, malware scanning. 
+Compliance: DPIA draft, records of processing activities, consent wording aligned to EDPB expectations. 
+Phase 2: Structured symptom capture + GP note export (opt-in health data)
+
+Symptom diary and questionnaire delivery with deterministic scoring and patient-controlled exports.
+Red-flag engine (hard-stop rules) + escalation UX, using HSE/NICE-based triggers. 
+Compliance: retention schedules, DSAR workflows, consent withdrawal, and security testing aligned with OWASP. 
+Phase 3: Clinician integration and oversight
+
+Clinician review queue for flagged interactions and generated GP notes; “human override” tools.
+Expanded data model (treatments, surgeries, investigations, provenance).
+AI Act alignment workstream: risk management process, logging/traceability, oversight documentation, accuracy/robustness testing, and staff AI literacy programme. 
+Phase 4: High-risk readiness (if triage becomes material)
+
+Formal clinical safety case; post-market monitoring plan; serious incident handling. 
+Reassess medical device software status based on intended purpose and claims; EU guidance stresses intended purpose and applies to apps/cloud software. 
+Prepare for Annex III high-risk applicability timeline (noting August 2026 for high-risk use cases). 
