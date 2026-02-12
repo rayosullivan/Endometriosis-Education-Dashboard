@@ -2,7 +2,7 @@ import LayoutPatient from "@/components/layout-patient";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Activity, MessageCircle, FileText, Calendar } from "lucide-react";
+import { ArrowRight, Activity, MessageCircle, FileText, Calendar, Lock } from "lucide-react";
 import { Link } from "wouter";
 
 export default function HomePage() {
@@ -25,28 +25,31 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="flex flex-col gap-4 min-[400px]:flex-row">
-                <Link href="/symptom-check">
+                <Link href="/login">
                   <Button size="lg" className="gap-2 h-12 px-8 text-base">
-                    <Activity className="h-4 w-4" />
-                    Check Symptoms
+                    <Lock className="h-4 w-4" />
+                    Patient Login
                   </Button>
                 </Link>
-                <Link href="/chat">
+                <Link href="/symptom-check">
                   <Button size="lg" variant="outline" className="gap-2 h-12 px-8 text-base bg-background/50 backdrop-blur hover:bg-background/80">
-                    <MessageCircle className="h-4 w-4" />
-                    Ask Assistant
+                    <Activity className="h-4 w-4" />
+                    Check Symptoms (Anonymous)
                   </Button>
                 </Link>
               </div>
               <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                <div className="flex items-center gap-1">
-                  <div className="h-2 w-2 rounded-full bg-green-500" />
-                  <span>Clinician Verified Content</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="h-2 w-2 rounded-full bg-blue-500" />
-                  <span>Secure & Private</span>
-                </div>
+                 <Link href="/chat">
+                    <span className="flex items-center gap-1 hover:text-primary transition-colors cursor-pointer underline underline-offset-4">
+                      <MessageCircle className="h-4 w-4" />
+                      Ask Assistant
+                    </span>
+                 </Link>
+                 <span className="text-muted-foreground/50">|</span>
+                 <span className="flex items-center gap-1">
+                   <div className="h-2 w-2 rounded-full bg-green-500" />
+                   Clinician Verified
+                 </span>
               </div>
             </div>
             <div className="mx-auto lg:mr-0 rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border border-white/50 bg-white/30 backdrop-blur-sm p-2 rotate-1 hover:rotate-0 transition-transform duration-500">
@@ -85,19 +88,19 @@ export default function HomePage() {
                 <Activity className="h-10 w-10 text-primary mb-2" />
                 <CardTitle className="font-serif">Symptom Tracking</CardTitle>
                 <CardDescription>
-                  Keep a detailed journal of your symptoms to help your doctor understand your condition better.
+                  Keep a detailed daily journal of your symptoms, triggers, and pain locations.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="list-disc list-inside text-sm text-muted-foreground space-y-2">
-                  <li>Pain intensity logging</li>
-                  <li>Cycle correlation</li>
+                  <li>Daily log entries</li>
+                  <li>Cycle tracking</li>
                   <li>Trigger identification</li>
                 </ul>
               </CardContent>
               <CardFooter>
-                <Link href="/symptom-check">
-                   <Button variant="link" className="p-0 h-auto text-primary">Start Tracking <ArrowRight className="ml-1 h-4 w-4" /></Button>
+                <Link href="/login">
+                   <Button variant="link" className="p-0 h-auto text-primary">Log In to Track <ArrowRight className="ml-1 h-4 w-4" /></Button>
                 </Link>
               </CardFooter>
             </Card>
@@ -140,7 +143,9 @@ export default function HomePage() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button variant="link" className="p-0 h-auto text-primary">Create Summary <ArrowRight className="ml-1 h-4 w-4" /></Button>
+                <Link href="/symptom-check">
+                   <Button variant="link" className="p-0 h-auto text-primary">Start Assessment <ArrowRight className="ml-1 h-4 w-4" /></Button>
+                </Link>
               </CardFooter>
             </Card>
           </div>

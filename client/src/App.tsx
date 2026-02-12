@@ -8,11 +8,16 @@ import HomePage from "@/pages/home";
 import DashboardPage from "@/pages/dashboard";
 import SymptomCheckPage from "@/pages/symptom-check";
 import ChatAssistantPage from "@/pages/chat-assistant";
+import LoginPage from "@/pages/login";
+import PatientDashboard from "@/pages/patient-dashboard";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={HomePage} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/patient/dashboard" component={PatientDashboard} />
+      
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/symptom-check" component={SymptomCheckPage} />
       <Route path="/chat" component={ChatAssistantPage} />
