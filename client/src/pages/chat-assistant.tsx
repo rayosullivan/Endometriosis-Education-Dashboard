@@ -7,16 +7,23 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Send, Bot, User, Info, ShieldCheck, FileText } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
+import { SAFETY_TRIGGERS, MOCK_RESPONSES, SYSTEM_PROMPT } from "@/lib/rag-system-prompts";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 type Message = {
   id: string;
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "system";
   content: string;
   citations?: Array<{ title: string; source: string }>;
   isThinking?: boolean;
 };
 
 const INITIAL_MESSAGES: Message[] = [
+  {
+    id: "system-1",
+    role: "system",
+    content: SYSTEM_PROMPT
+  },
   {
     id: "1",
     role: "assistant",
@@ -28,10 +35,36 @@ export default function ChatAssistantPage() {
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [inputValue, setInputValue] = useState("");
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const [showSystemPrompt, setShowSystemPrompt] = useState(false);
 
   useEffect(() => {
     // Scroll to bottom logic would go here
   }, [messages]);
+
+  const determineResponse = (input: string) => {
+    const lowerInput = input.toLowerCase();
+    
+    // Check psychological triggers
+    const psychMatch = SAFETY_TRIGGERS.psychological.find(t => lowerInput.includes(t));
+    if (psychMatch) {
+      return MOCK_RESPONSES.psychological_safety;
+    }
+
+    // Check physical triggers
+    const physMatch = SAFETY_TRIGGERS.physical.find(t => lowerInput.includes(t));
+    if (physMatch) {
+      const response = { ...MOCK_RESPONSES.physical_safety };
+      response.content = response.content.replace("{trigger}", physMatch);
+      return response;
+    }
+
+    // Default or unknown logic (simple keyword check for demo)
+    if (lowerInput.includes("symptom") || lowerInput.includes("endometriosis") || lowerInput.includes("pain") || lowerInput.includes("help")) {
+       return MOCK_RESPONSES.default;
+    }
+
+    return MOCK_RESPONSES.unknown;
+  };
 
   const handleSend = () => {
     if (!inputValue.trim()) return;
@@ -57,14 +90,14 @@ export default function ChatAssistantPage() {
 
       setTimeout(() => {
         setMessages((prev) => prev.filter((m) => m.id !== "thinking"));
+        
+        const aiResponseData = determineResponse(userMsg.content);
+        
         const responseMsg: Message = {
           id: (Date.now() + 1).toString(),
           role: "assistant",
-          content: "Endometriosis is defined as the presence of endometrial-like tissue outside the uterus, which induces a chronic, inflammatory reaction. Common symptoms include dysmenorrhoea (painful periods), dyspareunia (pain during intercourse), and chronic pelvic pain.",
-          citations: [
-            { title: "ESHRE Guideline: Endometriosis", source: "ESHRE 2022" },
-            { title: "NG73: Endometriosis diagnosis and management", source: "NICE 2017" }
-          ]
+          content: aiResponseData.content,
+          citations: aiResponseData.citations
         };
         setMessages((prev) => [...prev, responseMsg]);
       }, 1500);
@@ -89,16 +122,49 @@ export default function ChatAssistantPage() {
                   </p>
                 </div>
               </div>
-              <Button variant="ghost" size="sm" onClick={() => setMessages(INITIAL_MESSAGES)}>
-                Reset Chat
-              </Button>
+              <div className="flex gap-2">
+                <Dialog open={showSystemPrompt} onOpenChange={setShowSystemPrompt}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" size="sm" className="hidden md:flex">
+                      <ShieldCheck className="mr-2 h-3 w-3" /> Safety Protocols
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle>System Safety Configuration</DialogTitle>
+                      <DialogDescription>
+                         Active system prompts and safety rails enforcing clinical boundaries.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="bg-muted p-4 rounded-md font-mono text-xs whitespace-pre-wrap mt-4">
+                      {SYSTEM_PROMPT}
+                    </div>
+                    <div className="mt-4">
+                       <h4 className="font-bold text-sm mb-2">Active Triggers</h4>
+                       <div className="grid grid-cols-2 gap-4">
+                          <div className="border p-3 rounded bg-red-50 text-red-900 text-xs">
+                             <strong>Physical Safety:</strong>
+                             <div className="mt-1 opacity-80">{SAFETY_TRIGGERS.physical.join(", ")}</div>
+                          </div>
+                          <div className="border p-3 rounded bg-blue-50 text-blue-900 text-xs">
+                             <strong>Psychological Safety:</strong>
+                             <div className="mt-1 opacity-80">{SAFETY_TRIGGERS.psychological.join(", ")}</div>
+                          </div>
+                       </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+                <Button variant="ghost" size="sm" onClick={() => setMessages(INITIAL_MESSAGES)}>
+                  Reset Chat
+                </Button>
+              </div>
             </div>
           </CardHeader>
           
           <CardContent className="flex-1 p-0 overflow-hidden relative">
              <ScrollArea className="h-full p-4 md:p-6">
                 <div className="space-y-6 max-w-3xl mx-auto">
-                  {messages.map((msg) => (
+                  {messages.filter(m => m.role !== 'system').map((msg) => (
                     <div
                       key={msg.id}
                       className={`flex gap-4 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
@@ -146,6 +212,7 @@ export default function ChatAssistantPage() {
                 </div>
              </ScrollArea>
           </CardContent>
+
 
           <CardFooter className="p-4 bg-background border-t">
             <div className="w-full max-w-3xl mx-auto flex gap-2 relative">
