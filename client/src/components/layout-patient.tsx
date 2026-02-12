@@ -19,7 +19,7 @@ export default function LayoutPatient({ children }: { children: React.ReactNode 
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2 font-serif text-xl font-bold text-primary hover:opacity-90 transition-opacity">
             <Heart className="h-6 w-6 fill-primary/20" />
-            EndoCare
+            ELLA
           </Link>
 
           {/* Desktop Nav */}

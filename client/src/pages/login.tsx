@@ -23,9 +23,17 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-secondary/30 flex flex-col items-center justify-center p-4">
       <Link href="/">
-        <div className="flex items-center gap-2 font-serif text-2xl font-bold text-primary mb-8 cursor-pointer">
-          <Heart className="h-8 w-8 fill-primary/20" />
-          EndoCare
+        <div className="flex flex-col items-center mb-8 hover:opacity-90 transition-opacity">
+          <div className="flex items-center gap-2 font-serif text-4xl font-bold text-primary cursor-pointer mb-4">
+            <Heart className="h-10 w-10 fill-primary/20" />
+            ELLA
+          </div>
+          <div className="text-xs text-muted-foreground grid grid-cols-1 gap-1 text-center font-medium tracking-wide">
+            <span><span className="text-primary font-bold">E</span>ducation evidence-based</span>
+            <span><span className="text-primary font-bold">L</span>ifestyle optimisation</span>
+            <span><span className="text-primary font-bold">L</span>ong-term management</span>
+            <span><span className="text-primary font-bold">A</span>dvanced referral support</span>
+          </div>
         </div>
       </Link>
 

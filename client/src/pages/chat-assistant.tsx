@@ -20,7 +20,7 @@ const INITIAL_MESSAGES: Message[] = [
   {
     id: "1",
     role: "assistant",
-    content: "Hello. I'm your Endometriosis Care Assistant. I can help answer questions based on official guidelines (NICE, ESHRE) and validated information.\n\nPlease note: I am an AI, not a doctor. In an emergency, always contact 112/999.",
+    content: "Hello. I'm ELLA, your Endometriosis Care Assistant. I can help answer questions based on official guidelines (NICE, ESHRE) and validated information.\n\nPlease note: I am an AI, not a doctor. In an emergency, always contact 112/999.",
   },
 ];
 
@@ -82,7 +82,7 @@ export default function ChatAssistantPage() {
                   <Bot className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <CardTitle className="font-serif text-lg">EndoCare Assistant</CardTitle>
+                  <CardTitle className="font-serif text-lg">ELLA Assistant</CardTitle>
                   <p className="text-xs text-muted-foreground flex items-center gap-1">
                     <ShieldCheck className="h-3 w-3 text-green-600" />
                     Powered by Verified Clinical Guidelines

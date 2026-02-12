@@ -42,7 +42,7 @@ export default function LayoutClinician({ children }: { children: React.ReactNod
           <SidebarHeader className="border-b p-4">
             <Link href="/" className="flex items-center gap-2 font-serif text-xl font-bold text-sidebar-primary">
               <ShieldCheck className="h-6 w-6" />
-              <span>EndoCare Pro</span>
+              <span>ELLA Pro</span>
             </Link>
             <div className="mt-2 text-xs text-muted-foreground px-1">
               Clinician Portal • v2.1.0
