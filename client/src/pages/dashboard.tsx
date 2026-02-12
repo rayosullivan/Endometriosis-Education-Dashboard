@@ -64,10 +64,43 @@ export default function DashboardPage() {
             </div>
             <div className="flex gap-2">
               <Button variant="outline">Export Reports</Button>
-              <Button>
-                <FileText className="mr-2 h-4 w-4" />
-                New Content
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>
+                    <FileText className="mr-2 h-4 w-4" />
+                    New Content
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add New Content</DialogTitle>
+                    <DialogDescription>
+                      Upload a document or add a URL to the knowledge base.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="type-home" className="text-right">Type</Label>
+                      <select id="type-home" className="col-span-3 flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50">
+                        <option>Website URL</option>
+                        <option>PDF Document</option>
+                        <option>Guideline Text</option>
+                      </select>
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="title-home" className="text-right">Title</Label>
+                      <Input id="title-home" placeholder="e.g. Endometriosis UK Nutrition" className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="url-home" className="text-right">URL</Label>
+                      <Input id="url-home" placeholder="https://..." className="col-span-3" />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button type="submit">Add to Corpus</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
 
