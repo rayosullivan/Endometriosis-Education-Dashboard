@@ -12,20 +12,22 @@ import {
   Tooltip, 
   ResponsiveContainer,
   LineChart,
-  Line
+  Line,
+  Cell,
+  BarChart,
+  Bar
 } from "recharts";
-import { AlertCircle, FileText, CheckCircle2, Clock, Upload, Filter, Plus, ShieldCheck, History } from "lucide-react";
-import { SymptomCalendar } from "@/components/symptom-calendar";
-import { GPSummaryGenerator } from "@/components/gp-summary";
+import { AlertCircle, FileText, CheckCircle2, Clock, Upload, Filter, Plus, ShieldCheck, History, Globe, Link as LinkIcon, HelpCircle } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
-const DATA_SYMPTOMS = [
-  { name: "Mon", pain: 4, queries: 12 },
-  { name: "Tue", pain: 3, queries: 19 },
-  { name: "Wed", pain: 7, queries: 25 },
-  { name: "Thu", pain: 5, queries: 18 },
-  { name: "Fri", pain: 6, queries: 22 },
-  { name: "Sat", pain: 8, queries: 15 },
-  { name: "Sun", pain: 6, queries: 10 },
+const DATA_TOPICS = [
+  { name: "Pain Mgmt", count: 45 },
+  { name: "Diet", count: 32 },
+  { name: "Fertility", count: 28 },
+  { name: "Surgery", count: 15 },
+  { name: "Diagnosis", count: 12 },
 ];
 
 const REVIEW_QUEUE = [
@@ -38,7 +40,7 @@ const CONTENT_CORPUS = [
   { id: "C-001", title: "Endometriosis: Diagnosis and Management (NG73)", version: "2.4", lastUpdated: "2025-11-15", status: "Published", type: "Guideline" },
   { id: "C-002", title: "ESHRE Guideline: Endometriosis", version: "2022.1", lastUpdated: "2023-02-10", status: "Published", type: "Guideline" },
   { id: "C-003", title: "Pelvic Pain Management Pathways", version: "1.2", lastUpdated: "2026-01-20", status: "Draft", type: "Protocol" },
-  { id: "C-004", title: "Patient Leaflet: Understanding Your Cycle", version: "3.0", lastUpdated: "2026-02-01", status: "Published", type: "Leaflet" },
+  { id: "C-004", title: "Endometriosis UK - Information Pack", version: "1.0", lastUpdated: "2026-02-01", status: "Published", type: "Website", url: "https://endometriosis-uk.org" },
   { id: "C-005", title: "Urgent Care Triage Protocols", version: "4.1", lastUpdated: "2026-02-10", status: "Published", type: "Safety" },
 ];
 
@@ -59,7 +61,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-serif font-bold text-foreground">Clinician Dashboard</h1>
-              <p className="text-muted-foreground">Overview of content governance and patient engagement metrics.</p>
+              <p className="text-muted-foreground">Overview of content governance and patient insights.</p>
             </div>
             <div className="flex gap-2">
               <Button variant="outline">Export Reports</Button>
@@ -114,43 +116,39 @@ export default function DashboardPage() {
             </Card>
           </div>
 
-          {/* NEW: Patient Tools Section (Calendar & Report) */}
-          <div className="grid gap-6 md:grid-cols-2">
-             <SymptomCalendar />
-             <GPSummaryGenerator />
-          </div>
-
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-            {/* Charts */}
+            {/* AI Insights Chart */}
             <Card className="col-span-4">
               <CardHeader>
-                <CardTitle>Patient Engagement & Symptoms</CardTitle>
-                <CardDescription>Average reported pain levels vs assistant queries over the last 7 days.</CardDescription>
+                <CardTitle className="flex items-center gap-2">
+                  <HelpCircle className="h-5 w-5 text-primary" />
+                  Most Asked Topics
+                </CardTitle>
+                <CardDescription>Top themes from patient AI assistant queries (anonymized).</CardDescription>
               </CardHeader>
               <CardContent className="pl-2">
                 <ResponsiveContainer width="100%" height={350}>
-                  <LineChart data={DATA_SYMPTOMS}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                    <XAxis 
-                      dataKey="name" 
-                      stroke="#888888" 
-                      fontSize={12} 
-                      tickLine={false} 
-                      axisLine={false} 
-                    />
+                  <BarChart data={DATA_TOPICS} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--border))" />
+                    <XAxis type="number" hide />
                     <YAxis 
-                      stroke="#888888" 
-                      fontSize={12} 
-                      tickLine={false} 
-                      axisLine={false} 
-                      tickFormatter={(value) => `${value}`} 
+                      dataKey="name" 
+                      type="category" 
+                      width={100}
+                      tick={{ fill: 'hsl(var(--foreground))', fontSize: 12 }}
+                      axisLine={false}
+                      tickLine={false}
                     />
                     <Tooltip 
+                      cursor={{ fill: 'hsl(var(--muted)/0.2)' }}
                       contentStyle={{ backgroundColor: 'hsl(var(--card))', borderRadius: '8px', border: '1px solid hsl(var(--border))' }}
                     />
-                    <Line type="monotone" dataKey="pain" stroke="hsl(var(--destructive))" strokeWidth={2} activeDot={{ r: 8 }} name="Avg Pain Level" />
-                    <Line type="monotone" dataKey="queries" stroke="hsl(var(--primary))" strokeWidth={2} name="Assistant Queries" />
-                  </LineChart>
+                    <Bar dataKey="count" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} barSize={30}>
+                      {DATA_TOPICS.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={index === 0 ? "hsl(var(--primary))" : "hsl(var(--primary)/0.6)"} />
+                      ))}
+                    </Bar>
+                  </BarChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
@@ -203,17 +201,51 @@ export default function DashboardPage() {
               <Button variant="outline">
                  <Filter className="mr-2 h-4 w-4" /> Filter
               </Button>
-              <Button>
-                <Upload className="mr-2 h-4 w-4" />
-                Upload Document
-              </Button>
+              
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Resource
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add New Content</DialogTitle>
+                    <DialogDescription>
+                      Upload a document or add a URL to the knowledge base.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="type" className="text-right">Type</Label>
+                      <select id="type" className="col-span-3 flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50">
+                        <option>Website URL</option>
+                        <option>PDF Document</option>
+                        <option>Guideline Text</option>
+                      </select>
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="title" className="text-right">Title</Label>
+                      <Input id="title" placeholder="e.g. Endometriosis UK Nutrition" className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="url" className="text-right">URL</Label>
+                      <Input id="url" placeholder="https://..." className="col-span-3" />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button type="submit">Add to Corpus</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
 
           <Card>
             <CardHeader>
               <CardTitle>Corpus Library</CardTitle>
-              <CardDescription>Current indexed documents available to the Patient Assistant RAG system.</CardDescription>
+              <CardDescription>Current indexed documents and websites available to the Patient Assistant RAG system.</CardDescription>
             </CardHeader>
             <CardContent>
               <Table>
@@ -232,9 +264,17 @@ export default function DashboardPage() {
                   {CONTENT_CORPUS.map((doc) => (
                     <TableRow key={doc.id}>
                       <TableCell className="font-mono text-xs">{doc.id}</TableCell>
-                      <TableCell className="font-medium">{doc.title}</TableCell>
+                      <TableCell className="font-medium">
+                        <div className="flex flex-col">
+                           <span>{doc.title}</span>
+                           {doc.url && <a href={doc.url} target="_blank" className="text-xs text-muted-foreground flex items-center hover:underline"><LinkIcon className="h-3 w-3 mr-1"/> {doc.url}</a>}
+                        </div>
+                      </TableCell>
                       <TableCell>
-                        <Badge variant="outline">{doc.type}</Badge>
+                        <Badge variant="outline" className="gap-1">
+                          {doc.type === 'Website' ? <Globe className="h-3 w-3" /> : <FileText className="h-3 w-3" />}
+                          {doc.type}
+                        </Badge>
                       </TableCell>
                       <TableCell>{doc.version}</TableCell>
                       <TableCell>{doc.lastUpdated}</TableCell>
