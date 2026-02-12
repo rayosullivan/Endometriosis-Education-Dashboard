@@ -1,16 +1,19 @@
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, BookOpen, MessageCircle, Activity, Heart, ShieldAlert } from "lucide-react";
+import { Menu, BookOpen, MessageCircle, Activity, Heart, ShieldAlert, Globe } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function LayoutPatient({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
+  const { t, setLanguage, language } = useLanguage();
 
   const navItems = [
-    { href: "/", label: "Home", icon: Heart },
-    { href: "/symptom-check", label: "Symptom Checker", icon: Activity },
-    { href: "/chat", label: "Care Assistant", icon: MessageCircle },
-    { href: "/education", label: "Learn", icon: BookOpen },
+    { href: "/", label: t("nav.home"), icon: Heart },
+    { href: "/symptom-check", label: t("nav.symptom_checker"), icon: Activity },
+    { href: "/chat", label: t("nav.care_assistant"), icon: MessageCircle },
+    { href: "/education", label: t("nav.learn"), icon: BookOpen },
   ];
 
   return (
@@ -31,11 +34,28 @@ export default function LayoutPatient({ children }: { children: React.ReactNode 
                 {item.label}
               </Link>
             ))}
-            <Link href="/dashboard">
-              <Button variant="ghost" size="sm" className="ml-4 text-xs text-muted-foreground">
-                Clinician Portal
-              </Button>
-            </Link>
+            
+            <div className="flex items-center gap-2 border-l pl-6 ml-2">
+              <Select value={language} onValueChange={(val: any) => setLanguage(val)}>
+                <SelectTrigger className="w-[130px] h-8 text-xs border-none bg-secondary/50 focus:ring-0">
+                  <Globe className="mr-2 h-3 w-3" />
+                  <SelectValue placeholder="Language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="es">Español</SelectItem>
+                  <SelectItem value="pt">Português</SelectItem>
+                  <SelectItem value="uk">Українська</SelectItem>
+                  <SelectItem value="ar">العربية</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Link href="/dashboard">
+                <Button variant="ghost" size="sm" className="text-xs text-muted-foreground">
+                  {t("nav.clinician_portal")}
+                </Button>
+              </Link>
+            </div>
           </nav>
 
           {/* Mobile Nav */}
@@ -48,6 +68,23 @@ export default function LayoutPatient({ children }: { children: React.ReactNode 
             </SheetTrigger>
             <SheetContent side="right">
               <div className="grid gap-4 py-4">
+                <div className="flex items-center justify-between border-b pb-4 mb-2">
+                  <span className="text-sm font-medium">Language</span>
+                  <Select value={language} onValueChange={(val: any) => setLanguage(val)}>
+                    <SelectTrigger className="w-[140px] h-8 text-xs">
+                      <Globe className="mr-2 h-3 w-3" />
+                      <SelectValue placeholder="Language" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="en">English</SelectItem>
+                      <SelectItem value="es">Español</SelectItem>
+                      <SelectItem value="pt">Português</SelectItem>
+                      <SelectItem value="uk">Українська</SelectItem>
+                      <SelectItem value="ar">العربية</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 {navItems.map((item) => (
                   <Link key={item.href} href={item.href} className="flex items-center gap-2 text-lg font-medium">
                     <item.icon className="h-5 w-5 text-primary" />

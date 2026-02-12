@@ -4,8 +4,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Activity, MessageCircle, FileText, Calendar, Lock } from "lucide-react";
 import { Link } from "wouter";
+import { useLanguage } from "@/lib/i18n";
 
 export default function HomePage() {
+  const { t } = useLanguage();
+
   return (
     <LayoutPatient>
       {/* Hero Section */}
@@ -15,26 +18,26 @@ export default function HomePage() {
             <div className="flex flex-col justify-center space-y-8">
               <div className="space-y-4">
                 <Badge variant="outline" className="w-fit bg-background/50 backdrop-blur border-primary/20 text-primary">
-                  Regulated Health Information System
+                  {t("hero.badge")}
                 </Badge>
                 <h1 className="text-4xl font-serif font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-foreground">
-                  Your Trusted Companion for Endometriosis Care
+                  {t("hero.title")}
                 </h1>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl font-light">
-                  Track symptoms, access clinician-verified guidelines, and navigate your care pathway with confidence.
+                  {t("hero.description")}
                 </p>
               </div>
               <div className="flex flex-col gap-4 min-[400px]:flex-row">
                 <Link href="/login">
                   <Button size="lg" className="gap-2 h-12 px-8 text-base">
                     <Lock className="h-4 w-4" />
-                    Log In
+                    {t("hero.login")}
                   </Button>
                 </Link>
                 <Link href="/symptom-check">
                   <Button size="lg" variant="outline" className="gap-2 h-12 px-8 text-base bg-background/50 backdrop-blur hover:bg-background/80">
                     <Activity className="h-4 w-4" />
-                    Check Symptoms (Anonymous)
+                    {t("hero.check_symptoms")}
                   </Button>
                 </Link>
               </div>
@@ -42,13 +45,13 @@ export default function HomePage() {
                  <Link href="/chat">
                     <span className="flex items-center gap-1 hover:text-primary transition-colors cursor-pointer underline underline-offset-4">
                       <MessageCircle className="h-4 w-4" />
-                      Ask Assistant
+                      {t("hero.ask_assistant")}
                     </span>
                  </Link>
                  <span className="text-muted-foreground/50">|</span>
                  <span className="flex items-center gap-1">
                    <div className="h-2 w-2 rounded-full bg-green-500" />
-                   Clinician Verified
+                   {t("hero.clinician_verified")}
                  </span>
               </div>
             </div>
@@ -76,19 +79,19 @@ export default function HomePage() {
         <div className="container px-4 md:px-6">
           <div className="text-center mb-16 max-w-2xl mx-auto space-y-4">
             <h2 className="text-3xl font-serif font-bold tracking-tighter sm:text-4xl text-foreground">
-              Empowering Your Health Journey
+              {t("features.title")}
             </h2>
             <p className="text-muted-foreground md:text-lg">
-              Designed with clinicians to provide safe, accurate, and helpful tools for managing endometriosis.
+              {t("features.description")}
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <Card className="border-none shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-shadow">
               <CardHeader>
                 <Activity className="h-10 w-10 text-primary mb-2" />
-                <CardTitle className="font-serif">Symptom Tracking</CardTitle>
+                <CardTitle className="font-serif">{t("card.tracking.title")}</CardTitle>
                 <CardDescription>
-                  Keep a detailed daily journal of your symptoms, triggers, and pain locations.
+                  {t("card.tracking.desc")}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -108,9 +111,9 @@ export default function HomePage() {
             <Card className="border-none shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-shadow">
               <CardHeader>
                 <MessageCircle className="h-10 w-10 text-accent-foreground mb-2" />
-                <CardTitle className="font-serif">RAG Patient Assistant</CardTitle>
+                <CardTitle className="font-serif">{t("card.rag.title")}</CardTitle>
                 <CardDescription>
-                  Ask questions and get answers based on official guidelines and verified medical sources.
+                  {t("card.rag.desc")}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -130,9 +133,9 @@ export default function HomePage() {
             <Card className="border-none shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-shadow">
               <CardHeader>
                 <FileText className="h-10 w-10 text-secondary-foreground mb-2" />
-                <CardTitle className="font-serif">GP Summary</CardTitle>
+                <CardTitle className="font-serif">{t("card.gp.title")}</CardTitle>
                 <CardDescription>
-                  Generate a professional summary of your symptoms to share with your healthcare provider.
+                  {t("card.gp.desc")}
                 </CardDescription>
               </CardHeader>
               <CardContent>
