@@ -16,7 +16,7 @@ import {
   Cell,
   Bar
 } from "recharts";
-import { AlertCircle, FileText, CheckCircle2, Clock, Upload, Filter, Plus, ShieldCheck, History, Globe, Link as LinkIcon, HelpCircle } from "lucide-react";
+import { AlertCircle, FileText, CheckCircle2, Clock, Upload, Filter, Plus, ShieldCheck, History, Globe, Link as LinkIcon, HelpCircle, Bot, Lock } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -342,70 +342,230 @@ export default function DashboardPage() {
       <div className="flex flex-col space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-serif font-bold text-foreground">System Governance</h1>
-            <p className="text-muted-foreground">Audit logs, access control, and safety rule configuration.</p>
+            <h1 className="text-3xl font-serif font-bold text-foreground">System Governance & Compliance</h1>
+            <p className="text-muted-foreground">Centralized control for Regulatory, Security, and Clinical Safety protocols.</p>
           </div>
+          <Button variant="outline" className="gap-2">
+            <FileText className="h-4 w-4" /> Export Compliance Report
+          </Button>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-           <Card>
-             <CardHeader>
-               <CardTitle className="flex items-center gap-2">
-                 <History className="h-5 w-5" />
-                 Audit Log
-               </CardTitle>
-               <CardDescription>Immutable record of system actions.</CardDescription>
+        {/* Governance Overview Cards */}
+        <div className="grid gap-4 md:grid-cols-4">
+           <Card className="bg-primary/5 border-primary/20">
+             <CardHeader className="pb-2">
+               <CardTitle className="text-sm font-medium text-primary">GDPR Status</CardTitle>
              </CardHeader>
              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Timestamp</TableHead>
-                      <TableHead>Action</TableHead>
-                      <TableHead>User</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {AUDIT_LOGS.map((log) => (
-                      <TableRow key={log.id}>
-                        <TableCell className="text-xs font-mono">{log.timestamp}</TableCell>
-                        <TableCell className="font-medium">{log.action}</TableCell>
-                        <TableCell>{log.user}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+               <div className="text-2xl font-bold flex items-center gap-2">
+                 Compliant <CheckCircle2 className="h-5 w-5 text-green-600" />
+               </div>
+               <p className="text-xs text-muted-foreground">Last audit: Feb 1, 2026</p>
+             </CardContent>
+           </Card>
+           <Card className="bg-blue-50/50 border-blue-100">
+             <CardHeader className="pb-2">
+               <CardTitle className="text-sm font-medium text-blue-800">EU AI Act</CardTitle>
+             </CardHeader>
+             <CardContent>
+               <div className="text-2xl font-bold flex items-center gap-2 text-blue-900">
+                 Class IIa
+               </div>
+               <p className="text-xs text-blue-700/80">High-risk medical device</p>
+             </CardContent>
+           </Card>
+           <Card>
+             <CardHeader className="pb-2">
+               <CardTitle className="text-sm font-medium">SOC2 Controls</CardTitle>
+             </CardHeader>
+             <CardContent>
+               <div className="text-2xl font-bold">14/14</div>
+               <p className="text-xs text-muted-foreground">Passing monitored controls</p>
+             </CardContent>
+           </Card>
+           <Card>
+             <CardHeader className="pb-2">
+               <CardTitle className="text-sm font-medium">DCB0129</CardTitle>
+             </CardHeader>
+             <CardContent>
+               <div className="text-2xl font-bold">v3.2</div>
+               <p className="text-xs text-muted-foreground">Clinical Safety Case</p>
+             </CardContent>
+           </Card>
+        </div>
+
+        {/* Detailed Governance Tabs */}
+        <div className="grid gap-6">
+           <Card>
+             <CardHeader>
+               <div className="flex items-center justify-between">
+                 <div>
+                   <CardTitle>Compliance Frameworks</CardTitle>
+                   <CardDescription>Detailed controls and status for active regulatory frameworks.</CardDescription>
+                 </div>
+               </div>
+             </CardHeader>
+             <CardContent>
+               <div className="space-y-8">
+                 
+                 {/* GDPR Section */}
+                 <div className="space-y-4">
+                   <div className="flex items-center gap-2 border-b pb-2">
+                     <ShieldCheck className="h-5 w-5 text-primary" />
+                     <h3 className="text-lg font-semibold">GDPR & Data Privacy</h3>
+                   </div>
+                   <div className="grid md:grid-cols-2 gap-4">
+                     <div className="border rounded-lg p-4 space-y-2">
+                       <h4 className="font-medium text-sm">Data Subject Rights (DSAR)</h4>
+                       <p className="text-xs text-muted-foreground">Automated workflows for handling user data requests.</p>
+                       <div className="flex gap-2 mt-2">
+                         <Badge variant="outline">Right to Erasure</Badge>
+                         <Badge variant="outline">Data Portability</Badge>
+                       </div>
+                     </div>
+                     <div className="border rounded-lg p-4 space-y-2">
+                       <h4 className="font-medium text-sm">Consent Management</h4>
+                       <p className="text-xs text-muted-foreground">Granular consent tracking for all processing activities.</p>
+                       <div className="flex items-center gap-2 text-xs font-medium text-green-700 bg-green-50 px-2 py-1 rounded w-fit">
+                         <CheckCircle2 className="h-3 w-3" /> Active & Logged
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+
+                 {/* EU AI Act Section */}
+                 <div className="space-y-4">
+                   <div className="flex items-center gap-2 border-b pb-2">
+                     <Bot className="h-5 w-5 text-blue-600" />
+                     <h3 className="text-lg font-semibold">EU AI Act (2024)</h3>
+                   </div>
+                   <div className="grid md:grid-cols-3 gap-4">
+                     <div className="border rounded-lg p-4">
+                       <h4 className="font-medium text-sm mb-2">Human Oversight</h4>
+                       <p className="text-xs text-muted-foreground mb-3">
+                         "Human-in-the-loop" protocols are active. All AI clinical suggestions require clinician verification.
+                       </p>
+                       <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200 border-none">Active</Badge>
+                     </div>
+                     <div className="border rounded-lg p-4">
+                       <h4 className="font-medium text-sm mb-2">Transparency</h4>
+                       <p className="text-xs text-muted-foreground mb-3">
+                         Users are explicitly informed they are interacting with an AI. Sources are cited for all claims.
+                       </p>
+                       <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200 border-none">Compliant</Badge>
+                     </div>
+                     <div className="border rounded-lg p-4">
+                       <h4 className="font-medium text-sm mb-2">Data Governance</h4>
+                       <p className="text-xs text-muted-foreground mb-3">
+                         Training data is vetted for bias and accuracy (NG73/ESHRE guidelines only).
+                       </p>
+                       <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200 border-none">Verified</Badge>
+                     </div>
+                   </div>
+                 </div>
+
+                 {/* SOC2 & Security */}
+                 <div className="space-y-4">
+                   <div className="flex items-center gap-2 border-b pb-2">
+                     <Lock className="h-5 w-5 text-gray-600" />
+                     <h3 className="text-lg font-semibold">SOC2 & Security</h3>
+                   </div>
+                   <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Control ID</TableHead>
+                          <TableHead>Control Name</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Last Check</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-mono text-xs">CC6.1</TableCell>
+                          <TableCell>Logical Access Security</TableCell>
+                          <TableCell><Badge variant="outline" className="text-green-600 border-green-200 bg-green-50">Passing</Badge></TableCell>
+                          <TableCell className="text-muted-foreground text-xs">Automatic (Daily)</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-mono text-xs">CC6.7</TableCell>
+                          <TableCell>Data Transmission Encryption (TLS 1.3)</TableCell>
+                          <TableCell><Badge variant="outline" className="text-green-600 border-green-200 bg-green-50">Passing</Badge></TableCell>
+                          <TableCell className="text-muted-foreground text-xs">Automatic (Hourly)</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-mono text-xs">CC7.1</TableCell>
+                          <TableCell>Vulnerability Scanning</TableCell>
+                          <TableCell><Badge variant="outline" className="text-green-600 border-green-200 bg-green-50">Passing</Badge></TableCell>
+                          <TableCell className="text-muted-foreground text-xs">Feb 10, 2026</TableCell>
+                        </TableRow>
+                      </TableBody>
+                   </Table>
+                 </div>
+
+               </div>
              </CardContent>
            </Card>
 
-           <Card>
-             <CardHeader>
-               <CardTitle className="flex items-center gap-2">
-                 <ShieldCheck className="h-5 w-5" />
-                 Safety Thresholds
-               </CardTitle>
-               <CardDescription>Configure automated triage triggers.</CardDescription>
-             </CardHeader>
-             <CardContent className="space-y-4">
-               <div className="flex items-center justify-between border p-3 rounded-lg">
-                  <div className="space-y-1">
-                    <p className="font-medium">Severe Pain Escalation</p>
-                    <p className="text-xs text-muted-foreground">Trigger urgent care on Pain &gt; 8/10 + Fever</p>
+           <div className="grid md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <History className="h-5 w-5" />
+                    Recent Audit Log
+                  </CardTitle>
+                  <CardDescription>Immutable record of critical system actions.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                   <Table>
+                     <TableHeader>
+                       <TableRow>
+                         <TableHead>Timestamp</TableHead>
+                         <TableHead>Action</TableHead>
+                         <TableHead>User</TableHead>
+                       </TableRow>
+                     </TableHeader>
+                     <TableBody>
+                       {AUDIT_LOGS.map((log) => (
+                         <TableRow key={log.id}>
+                           <TableCell className="text-xs font-mono">{log.timestamp}</TableCell>
+                           <TableCell className="font-medium text-xs">{log.action}</TableCell>
+                           <TableCell className="text-xs">{log.user}</TableCell>
+                         </TableRow>
+                       ))}
+                     </TableBody>
+                   </Table>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <ShieldCheck className="h-5 w-5" />
+                    Safety Thresholds (DCB0129)
+                  </CardTitle>
+                  <CardDescription>Automated clinical safety triggers.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between border p-3 rounded-lg">
+                     <div className="space-y-1">
+                       <p className="font-medium text-sm">Severe Pain Escalation</p>
+                       <p className="text-xs text-muted-foreground">Trigger urgent care on Pain &gt; 8/10 + Fever</p>
+                     </div>
+                     <Switch checked />
                   </div>
-                  <Switch checked />
-               </div>
-               <div className="flex items-center justify-between border p-3 rounded-lg">
-                  <div className="space-y-1">
-                    <p className="font-medium">Pregnancy Exclusion</p>
-                    <p className="text-xs text-muted-foreground">Mandatory question flow for 18-45y</p>
+                  <div className="flex items-center justify-between border p-3 rounded-lg">
+                     <div className="space-y-1">
+                       <p className="font-medium text-sm">Red Flag Identification</p>
+                       <p className="text-xs text-muted-foreground">Scan free-text for "suicide", "severe bleeding"</p>
+                     </div>
+                     <Switch checked />
                   </div>
-                  <Switch checked />
-               </div>
-               <Button variant="outline" className="w-full">
-                 <Plus className="mr-2 h-4 w-4" /> Add Safety Rule
-               </Button>
-             </CardContent>
-           </Card>
+                  <Button variant="outline" className="w-full text-xs">
+                    <Plus className="mr-2 h-3 w-3" /> Add Clinical Safety Rule
+                  </Button>
+                </CardContent>
+              </Card>
+           </div>
         </div>
       </div>
     </LayoutClinician>
