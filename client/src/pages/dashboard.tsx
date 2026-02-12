@@ -15,6 +15,8 @@ import {
   Line
 } from "recharts";
 import { AlertCircle, FileText, CheckCircle2, Clock, Upload, Filter, Plus, ShieldCheck, History } from "lucide-react";
+import { SymptomCalendar } from "@/components/symptom-calendar";
+import { GPSummaryGenerator } from "@/components/gp-summary";
 
 const DATA_SYMPTOMS = [
   { name: "Mon", pain: 4, queries: 12 },
@@ -110,6 +112,12 @@ export default function DashboardPage() {
                 <p className="text-xs text-muted-foreground">Citation verification rate</p>
               </CardContent>
             </Card>
+          </div>
+
+          {/* NEW: Patient Tools Section (Calendar & Report) */}
+          <div className="grid gap-6 md:grid-cols-2">
+             <SymptomCalendar />
+             <GPSummaryGenerator />
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
