@@ -4,8 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 import { format } from "date-fns";
-import { Activity, Droplet, AlertCircle } from "lucide-react";
+import { Activity, Droplet, AlertCircle, Mic, Loader2, Save } from "lucide-react";
 
 // Mock data for symptom history
 const SYMPTOM_HISTORY: Record<string, { pain: number; flow?: string; notes?: string }> = {
@@ -17,6 +18,8 @@ const SYMPTOM_HISTORY: Record<string, { pain: number; flow?: string; notes?: str
 export function SymptomCalendar() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [noteText, setNoteText] = useState("");
+  const [isRecording, setIsRecording] = useState(false);
 
   // Function to determine modifiers for the calendar
   const modifiers = {
@@ -37,7 +40,25 @@ export function SymptomCalendar() {
 
   const handleDayClick = (day: Date) => {
     setSelectedDate(day);
+    const key = format(day, "yyyy-MM-dd");
+    setNoteText(SYMPTOM_HISTORY[key]?.notes || "");
     setIsDialogOpen(true);
+  };
+
+  const toggleRecording = () => {
+    if (isRecording) {
+      setIsRecording(false);
+      return;
+    }
+
+    setIsRecording(true);
+    // Simulate AI transcription delay
+    setTimeout(() => {
+      setIsRecording(false);
+      setNoteText((prev) => 
+        (prev ? prev + " " : "") + "I'm feeling a sharp pain in my lower left abdomen today, and also feeling quite nauseous since this morning."
+      );
+    }, 2000);
   };
 
   const selectedData = selectedDate ? SYMPTOM_HISTORY[format(selectedDate, "yyyy-MM-dd")] : null;
@@ -72,7 +93,7 @@ export function SymptomCalendar() {
         />
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogContent>
+          <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>
                 Symptom Log: {selectedDate ? format(selectedDate, "MMMM do, yyyy") : ""}
@@ -95,19 +116,35 @@ export function SymptomCalendar() {
                       <span>{selectedData.flow}</span>
                     </div>
                   )}
-                  {selectedData.notes && (
-                    <div className="p-4 bg-muted/30 rounded-lg">
-                      <span className="font-medium block mb-2">Notes</span>
-                      <p className="text-sm text-muted-foreground">{selectedData.notes}</p>
-                    </div>
-                  )}
                 </>
-              ) : (
-                <div className="text-center py-8 text-muted-foreground">
-                  No symptoms logged for this day.
-                  <Button className="mt-4 w-full" variant="outline">Add Log Entry</Button>
+              ) : null}
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Daily Notes</label>
+                <div className="relative">
+                  <Textarea 
+                    placeholder="Describe your symptoms..." 
+                    value={noteText}
+                    onChange={(e) => setNoteText(e.target.value)}
+                    className="min-h-[100px] pr-10"
+                  />
+                  <Button
+                    size="icon"
+                    variant={isRecording ? "destructive" : "secondary"}
+                    className={`absolute bottom-2 right-2 h-8 w-8 rounded-full shadow-sm ${isRecording ? "animate-pulse" : ""}`}
+                    onClick={toggleRecording}
+                  >
+                    {isRecording ? <Loader2 className="h-4 w-4 animate-spin" /> : <Mic className="h-4 w-4" />}
+                  </Button>
                 </div>
-              )}
+                {isRecording && (
+                  <p className="text-xs text-muted-foreground animate-pulse">Listening... (AI Transcription)</p>
+                )}
+              </div>
+
+              <Button className="w-full">
+                <Save className="mr-2 h-4 w-4" /> Save Entry
+              </Button>
             </div>
           </DialogContent>
         </Dialog>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { FileText, Download, Check, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
@@ -51,16 +52,28 @@ export function GPSummaryGenerator() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium">Include</label>
-            <Select defaultValue="summary">
-              <SelectTrigger>
-                <SelectValue placeholder="Select details" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="summary">Summary Only</SelectItem>
-                <SelectItem value="detailed">Detailed Logs</SelectItem>
-                <SelectItem value="redflags">Red Flags Only</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="space-y-3">
+              <Select defaultValue="summary">
+                <SelectTrigger>
+                  <SelectValue placeholder="Select details" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="summary">Summary Only</SelectItem>
+                  <SelectItem value="detailed">Detailed Logs</SelectItem>
+                  <SelectItem value="redflags">Red Flags Only</SelectItem>
+                </SelectContent>
+              </Select>
+              
+              <div className="flex items-center space-x-2 border rounded-md p-2 bg-muted/20">
+                <Checkbox id="include-diary" />
+                <label
+                  htmlFor="include-diary"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                >
+                  Append Symptom Diary
+                </label>
+              </div>
+            </div>
           </div>
         </div>
 
