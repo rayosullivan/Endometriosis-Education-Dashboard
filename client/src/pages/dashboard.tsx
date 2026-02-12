@@ -16,10 +16,12 @@ import {
   Cell,
   Bar
 } from "recharts";
-import { AlertCircle, FileText, CheckCircle2, Clock, Upload, Filter, Plus, ShieldCheck, History, Globe, Link as LinkIcon, HelpCircle, Bot, Lock } from "lucide-react";
+import { AlertCircle, FileText, CheckCircle2, Clock, Upload, Filter, Plus, ShieldCheck, History, Globe, Link as LinkIcon, HelpCircle, Bot, Lock, Activity } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+
+import { getPopulationStats } from "@/lib/population-stats";
 
 const DATA_TOPICS = [
   { name: "Pain Mgmt", count: 45 },
@@ -48,6 +50,8 @@ const AUDIT_LOGS = [
   { id: 2, action: "TRIAGE_TRIGGER", user: "System", resource: "Patient-882", timestamp: "2026-02-12 09:15" },
   { id: 3, action: "LOGIN_FAILED", user: "Unknown", resource: "-", timestamp: "2026-02-12 10:00" },
 ];
+
+const POPULATION_STATS = getPopulationStats();
 
 export default function DashboardPage() {
   const [location] = useLocation();
@@ -147,6 +151,49 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           </div>
+
+          {/* Population Health Statistics Section */}
+          <Card className="border-primary/10 shadow-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Activity className="h-5 w-5 text-primary" />
+                Population Health Insights (Anonymous Questionnaire Data)
+              </CardTitle>
+              <CardDescription>
+                Statistical summary of key metrics from collected anonymous symptom assessments (N=500).
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                {POPULATION_STATS.map((category) => (
+                  <div key={category.category}>
+                    <h3 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">{category.category}</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {category.stats.map((stat) => (
+                        <div key={stat.label} className="border rounded-lg p-3 bg-card hover:bg-accent/5 transition-colors">
+                          <div className="text-sm font-medium mb-2 truncate" title={stat.label}>{stat.label}</div>
+                          <div className="grid grid-cols-3 gap-2 text-center divide-x">
+                            <div>
+                              <div className="text-xs text-muted-foreground">Mean</div>
+                              <div className="font-bold text-primary">{stat.mean}</div>
+                            </div>
+                            <div>
+                              <div className="text-xs text-muted-foreground">Median</div>
+                              <div className="font-bold">{stat.median}</div>
+                            </div>
+                            <div>
+                              <div className="text-xs text-muted-foreground">10th %</div>
+                              <div className="font-bold text-muted-foreground">{stat.p10}</div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
             {/* AI Insights Chart */}
