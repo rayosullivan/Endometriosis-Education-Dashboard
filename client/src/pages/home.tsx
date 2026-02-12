@@ -28,7 +28,7 @@ export default function HomePage() {
                 <Link href="/login">
                   <Button size="lg" className="gap-2 h-12 px-8 text-base">
                     <Lock className="h-4 w-4" />
-                    Patient Login
+                    Log In
                   </Button>
                 </Link>
                 <Link href="/symptom-check">
