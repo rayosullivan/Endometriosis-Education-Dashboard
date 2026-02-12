@@ -25,12 +25,10 @@ export default function LayoutPatient({ children }: { children: React.ReactNode 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
-              <Link key={item.href} href={item.href}>
-                <a className={`text-sm font-medium transition-colors hover:text-primary ${
-                  location === item.href ? "text-primary" : "text-muted-foreground"
-                }`}>
-                  {item.label}
-                </a>
+              <Link key={item.href} href={item.href} className={`text-sm font-medium transition-colors hover:text-primary ${
+                location === item.href ? "text-primary" : "text-muted-foreground"
+              }`}>
+                {item.label}
               </Link>
             ))}
             <Link href="/dashboard">
@@ -51,19 +49,15 @@ export default function LayoutPatient({ children }: { children: React.ReactNode 
             <SheetContent side="right">
               <div className="grid gap-4 py-4">
                 {navItems.map((item) => (
-                  <Link key={item.href} href={item.href}>
-                    <a className="flex items-center gap-2 text-lg font-medium">
-                      <item.icon className="h-5 w-5 text-primary" />
-                      {item.label}
-                    </a>
+                  <Link key={item.href} href={item.href} className="flex items-center gap-2 text-lg font-medium">
+                    <item.icon className="h-5 w-5 text-primary" />
+                    {item.label}
                   </Link>
                 ))}
                 <div className="mt-8 border-t pt-4">
-                  <Link href="/dashboard">
-                    <a className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <ShieldAlert className="h-4 w-4" />
-                      Clinician Access
-                    </a>
+                  <Link href="/dashboard" className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <ShieldAlert className="h-4 w-4" />
+                    Clinician Access
                   </Link>
                 </div>
               </div>

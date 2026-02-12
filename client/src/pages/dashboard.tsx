@@ -14,7 +14,6 @@ import {
   LineChart,
   Line,
   Cell,
-  BarChart,
   Bar
 } from "recharts";
 import { AlertCircle, FileText, CheckCircle2, Clock, Upload, Filter, Plus, ShieldCheck, History, Globe, Link as LinkIcon, HelpCircle } from "lucide-react";
