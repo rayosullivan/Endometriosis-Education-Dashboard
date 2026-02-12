@@ -239,7 +239,16 @@ class MedicalReportGenerator {
     doc.text(`Dear Dr. ${gpDetails.name},`, 20, y);
     y += 10;
     
-    const introText = `I am writing to share the results of a self-administered endometriosis symptom assessment I recently completed. The tool, based on the ENDOPAIN-4D framework, provides a structured overview of my symptoms to facilitate our discussion.`;
+    let recommendationText = "";
+    if (assessment.riskScore < 30) {
+        recommendationText = "Based on the lower probability score (<30%), this assessment suggests a lower likelihood of severe deep infiltrating endometriosis. However, considering the reported symptoms, I would appreciate your clinical opinion on whether a referral to a specialist is warranted for further investigation.";
+    } else if (assessment.riskScore <= 70) {
+        recommendationText = "Based on the moderate probability score (30-70%), this assessment suggests an elective referral to an endometriosis specialist for further evaluation would be appropriate to manage symptoms and investigate potential causes.";
+    } else {
+        recommendationText = "Based on the high probability score (>70%), this assessment strongly suggests an urgent referral to an endometriosis specialist for comprehensive evaluation, given the severity of symptoms and high likelihood of pathology.";
+    }
+
+    const introText = `I am writing to share the results of a self-administered endometriosis symptom assessment I recently completed. The tool, based on the ENDOPAIN-4D framework, provides a structured overview of my symptoms to facilitate our discussion. ${recommendationText}`;
     const splitIntro = doc.splitTextToSize(introText, 170);
     doc.text(splitIntro, 20, y);
     y += (splitIntro.length * 5) + 5;

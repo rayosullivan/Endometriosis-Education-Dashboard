@@ -101,9 +101,9 @@ export default function SymptomCheckPage() {
     const risk = assessmentService.calculator.calculateRisk(scoring, demographics);
     let category: 'Low' | 'Moderate' | 'High' | 'Very High' = 'Low';
     
-    if (risk >= 80) category = 'Very High';
-    else if (risk >= 50) category = 'High';
+    if (risk > 70) category = 'Very High';
     else if (risk >= 30) category = 'Moderate';
+    else category = 'Low';
 
     const redFlags: string[] = [];
     if (scoring.bowelSymptoms.rectalBleeding) redFlags.push("Rectal bleeding during period");
