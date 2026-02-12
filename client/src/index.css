@@ -58,103 +58,103 @@
   --radius: 0.75rem;
 }
 
-/* LIGHT MODE - Clean, Medical, Empathetic */
+/* LIGHT MODE - Pink & Red "EndoCare" Style */
 :root {
-  /* Soft Lavender/Purple Primary - Trust & Calm */
-  --primary: 265 45% 55%; 
-  --primary-foreground: 0 0% 100%;
+  /* Primary: Deep Raspberry / Warm Rose - Professional yet warm */
+  --primary: 345 65% 55%; 
+  --primary-foreground: 355 100% 98%;
 
-  /* Soft Sage/Teal Secondary - Healing */
-  --secondary: 170 30% 94%;
-  --secondary-foreground: 170 40% 30%;
+  /* Secondary: Soft Blush / Pale Pink - Calming background elements */
+  --secondary: 345 40% 96%;
+  --secondary-foreground: 345 60% 35%;
 
-  /* Warm Peach Accent - Empathy */
-  --accent: 14 60% 96%;
-  --accent-foreground: 14 50% 40%;
+  /* Accent: Warm Coral / Soft Red - Highlights without alarm */
+  --accent: 5 85% 95%;
+  --accent-foreground: 5 70% 45%;
 
-  /* Destructive - Warning/Red Flags */
-  --destructive: 0 70% 60%;
+  /* Destructive: Strong Red - Clear warnings */
+  --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
 
-  /* Neutrals */
-  --background: 260 20% 99%; /* Very subtle purple tint */
-  --foreground: 260 20% 20%; /* Soft black */
+  /* Neutrals: Warm tinted grays */
+  --background: 345 20% 99%; /* Very faint pink tint */
+  --foreground: 345 25% 25%; /* Deep warm charcoal */
   
   --card: 0 0% 100%;
-  --card-foreground: 260 20% 20%;
+  --card-foreground: 345 25% 25%;
   
   --popover: 0 0% 100%;
-  --popover-foreground: 260 20% 20%;
+  --popover-foreground: 345 25% 25%;
   
-  --muted: 260 10% 94%;
-  --muted-foreground: 260 10% 50%;
+  --muted: 345 10% 94%;
+  --muted-foreground: 345 10% 50%;
   
-  --border: 260 10% 90%;
-  --input: 260 10% 90%;
-  --ring: 265 45% 55%;
+  --border: 345 15% 90%;
+  --input: 345 15% 90%;
+  --ring: 345 65% 55%;
 
-  /* Charts */
-  --chart-1: 265 45% 55%;
-  --chart-2: 170 40% 50%;
-  --chart-3: 14 60% 60%;
-  --chart-4: 45 70% 60%;
-  --chart-5: 200 50% 60%;
+  /* Charts: A range of pinks, reds, and warm tones */
+  --chart-1: 345 65% 55%; /* Primary Pink */
+  --chart-2: 5 75% 65%;   /* Soft Red */
+  --chart-3: 320 60% 65%; /* Magenta/Orchid */
+  --chart-4: 25 85% 65%;  /* Coral/Orange */
+  --chart-5: 350 40% 70%; /* Muted Rose */
 
-  /* Sidebar (Clinician Dashboard) - slightly darker for contrast */
-  --sidebar: 260 25% 97%;
-  --sidebar-foreground: 260 20% 30%;
-  --sidebar-primary: 265 45% 55%;
+  /* Sidebar (Clinician Dashboard) - Keeping it light and clean */
+  --sidebar: 345 20% 98%;
+  --sidebar-foreground: 345 25% 30%;
+  --sidebar-primary: 345 65% 55%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 260 15% 92%;
-  --sidebar-accent-foreground: 260 20% 20%;
-  --sidebar-border: 260 10% 90%;
-  --sidebar-ring: 265 45% 55%;
+  --sidebar-accent: 345 20% 94%;
+  --sidebar-accent-foreground: 345 65% 55%;
+  --sidebar-border: 345 15% 90%;
+  --sidebar-ring: 345 65% 55%;
 }
 
 .dark {
-  /* Inverted but keeping the purple/teal soul */
-  --background: 260 30% 10%;
-  --foreground: 260 10% 90%;
+  /* Dark Mode - Deep Plum/Burgundy base */
+  --background: 345 30% 10%;
+  --foreground: 345 10% 90%;
   
-  --card: 260 30% 13%;
-  --card-foreground: 260 10% 90%;
+  --card: 345 30% 13%;
+  --card-foreground: 345 10% 90%;
   
-  --popover: 260 30% 13%;
-  --popover-foreground: 260 10% 90%;
+  --popover: 345 30% 13%;
+  --popover-foreground: 345 10% 90%;
   
-  --primary: 265 50% 65%;
-  --primary-foreground: 260 30% 10%;
+  --primary: 345 70% 65%; /* Brighter Pink for dark mode contrast */
+  --primary-foreground: 345 30% 10%;
   
-  --secondary: 170 30% 20%;
-  --secondary-foreground: 170 40% 80%;
+  --secondary: 345 30% 20%;
+  --secondary-foreground: 345 40% 80%;
   
-  --muted: 260 20% 20%;
-  --muted-foreground: 260 10% 60%;
+  --muted: 345 20% 20%;
+  --muted-foreground: 345 10% 60%;
   
-  --accent: 14 30% 20%;
-  --accent-foreground: 14 50% 80%;
+  --accent: 5 30% 20%;
+  --accent-foreground: 5 50% 80%;
   
   --destructive: 0 60% 50%;
   --destructive-foreground: 0 0% 98%;
   
-  --border: 260 20% 20%;
-  --input: 260 20% 20%;
-  --ring: 265 50% 65%;
+  --border: 345 20% 20%;
+  --input: 345 20% 20%;
+  --ring: 345 70% 65%;
   
-  --chart-1: 265 50% 65%;
-  --chart-2: 170 40% 50%;
-  --chart-3: 14 60% 60%;
-  --chart-4: 45 70% 60%;
-  --chart-5: 200 50% 60%;
+  --chart-1: 345 70% 65%;
+  --chart-2: 5 75% 65%;
+  --chart-3: 320 60% 65%;
+  --chart-4: 25 85% 65%;
+  --chart-5: 350 40% 70%;
 
-  --sidebar: 260 30% 8%;
-  --sidebar-foreground: 260 10% 80%;
-  --sidebar-primary: 265 50% 65%;
-  --sidebar-primary-foreground: 260 30% 10%;
-  --sidebar-accent: 260 20% 18%;
-  --sidebar-accent-foreground: 260 10% 90%;
-  --sidebar-border: 260 20% 15%;
-  --sidebar-ring: 265 50% 65%;
+  --sidebar: 345 30% 8%;
+  --sidebar-foreground: 345 10% 80%;
+  --sidebar-primary: 345 70% 65%;
+  --sidebar-primary-foreground: 345 30% 10%;
+  --sidebar-accent: 345 20% 18%;
+  --sidebar-accent-foreground: 345 10% 90%;
+  --sidebar-border: 345 20% 15%;
+  --sidebar-ring: 345 70% 65%;
 }
 
 @layer base {
