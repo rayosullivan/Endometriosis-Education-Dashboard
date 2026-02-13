@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Send, Bot, User, Info, ShieldCheck, FileText } from "lucide-react";
+import { Send, Bot, User, Info, ShieldCheck, FileText, Mic, Loader2 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { SAFETY_TRIGGERS, MOCK_RESPONSES, SYSTEM_PROMPT } from "@/lib/rag-system-prompts";
@@ -34,12 +34,29 @@ const INITIAL_MESSAGES: Message[] = [
 export default function ChatAssistantPage() {
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [inputValue, setInputValue] = useState("");
+  const [isListening, setIsListening] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const [showSystemPrompt, setShowSystemPrompt] = useState(false);
 
   useEffect(() => {
     // Scroll to bottom logic would go here
   }, [messages]);
+
+  const toggleListening = () => {
+    if (isListening) {
+      setIsListening(false);
+      return;
+    }
+
+    setIsListening(true);
+    // Simulate speech-to-text
+    setTimeout(() => {
+      setIsListening(false);
+      setInputValue((prev) => 
+        (prev ? prev + " " : "") + "Can you explain what dyspareunia is?"
+      );
+    }, 2000);
+  };
 
   const determineResponse = (input: string) => {
     const lowerInput = input.toLowerCase();
@@ -215,21 +232,33 @@ export default function ChatAssistantPage() {
 
 
           <CardFooter className="p-4 bg-background border-t">
-            <div className="w-full max-w-3xl mx-auto flex gap-2 relative">
-              <Input 
-                placeholder="Ask about symptoms, treatments, or guidelines..." 
-                className="pr-12 py-6 rounded-full shadow-sm"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSend()}
-              />
-              <Button 
-                size="icon" 
-                className="absolute right-1 top-1 h-10 w-10 rounded-full" 
-                onClick={handleSend}
+            <div className="w-full max-w-3xl mx-auto flex gap-2 items-end">
+              <Button
+                size="icon"
+                variant={isListening ? "destructive" : "outline"}
+                className={`h-12 w-12 rounded-full shrink-0 ${isListening ? "animate-pulse" : ""}`}
+                onClick={toggleListening}
               >
-                <Send className="h-4 w-4" />
+                {isListening ? <Loader2 className="h-5 w-5 animate-spin" /> : <Mic className="h-5 w-5" />}
               </Button>
+              
+              <div className="relative flex-1">
+                <Input 
+                  placeholder={isListening ? "Listening..." : "Ask about symptoms, treatments, or guidelines..."}
+                  className="pr-12 py-6 rounded-full shadow-sm h-12"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                />
+                <Button 
+                  size="icon" 
+                  className="absolute right-1 top-1 h-10 w-10 rounded-full" 
+                  onClick={handleSend}
+                  disabled={!inputValue.trim() || isListening}
+                >
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
           </CardFooter>
           <div className="bg-muted/20 py-2 text-center text-[10px] text-muted-foreground border-t">
