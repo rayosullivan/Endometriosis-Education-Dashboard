@@ -10,9 +10,10 @@ import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useState } from "react";
 import { format } from "date-fns";
-import { Plus, Save, Activity, Droplet, MapPin, Zap, Calendar as CalendarIcon, History } from "lucide-react";
+import { Plus, Save, Activity, Droplet, MapPin, Zap, Calendar as CalendarIcon, History, Sparkles, TrendingUp, AlertTriangle } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Progress } from "@/components/ui/progress";
 
 // Mock Data Structure for Diary Entry
 type DiaryEntry = {
@@ -36,13 +37,43 @@ const INITIAL_ENTRY = {
 export default function PatientDashboard() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [isLogOpen, setIsLogOpen] = useState(false);
+  const [isSummaryOpen, setIsSummaryOpen] = useState(false);
+  const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
+  const [summaryData, setSummaryData] = useState<any>(null);
   const [currentEntry, setCurrentEntry] = useState(INITIAL_ENTRY);
   
   // Mock History Data
   const [history, setHistory] = useState<DiaryEntry[]>([
     { date: new Date(2026, 1, 10), painLevel: 4, flow: "light", painLocations: ["Pelvis"], triggers: [], notes: "Mild cramping" },
     { date: new Date(2026, 1, 11), painLevel: 7, flow: "medium", painLocations: ["Pelvis", "Back"], triggers: ["Bowel Movement"], notes: "Pain worsened in afternoon" },
+    { date: new Date(2026, 1, 12), painLevel: 6, flow: "medium", painLocations: ["Pelvis"], triggers: ["Stress"], notes: "Consistent ache all day" },
+    { date: new Date(2026, 1, 14), painLevel: 3, flow: "spotting", painLocations: ["Lower Back"], triggers: ["Exercise"], notes: "Felt better after yoga" },
   ]);
+
+  const generateSummary = () => {
+    setIsGeneratingSummary(true);
+    setSummaryData(null);
+    
+    // Simulate AI Processing
+    setTimeout(() => {
+      const avgPain = history.reduce((acc, curr) => acc + curr.painLevel, 0) / (history.length || 1);
+      const triggers = history.flatMap(h => h.triggers);
+      const mostCommonTrigger = triggers.sort((a,b) =>
+        triggers.filter(v => v===a).length - triggers.filter(v => v===b).length
+      ).pop() || "None";
+
+      setSummaryData({
+        period: "Last 30 Days",
+        avgPain: avgPain.toFixed(1),
+        painTrend: avgPain > 5 ? "Increasing" : "Stable",
+        commonTrigger: mostCommonTrigger,
+        keyInsight: "Your symptoms appear to correlate with high-stress days. Pain levels have remained moderate but consistent.",
+        symptomBurden: 65, // Mock score
+        recommendation: "Consider scheduling relaxation techniques on anticipated stressful days based on your trigger patterns."
+      });
+      setIsGeneratingSummary(false);
+    }, 2000);
+  };
 
   const handleSaveEntry = () => {
     if (!date) return;
@@ -71,13 +102,86 @@ export default function PatientDashboard() {
             <h1 className="text-3xl font-serif font-bold text-foreground">My Health Journal</h1>
             <p className="text-muted-foreground">Track your symptoms daily to identify patterns.</p>
           </div>
-          <Dialog open={isLogOpen} onOpenChange={setIsLogOpen}>
-            <DialogTrigger asChild>
-              <Button size="lg" className="shadow-lg shadow-primary/20">
-                <Plus className="mr-2 h-5 w-5" /> Log Symptoms for Today
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <div className="flex gap-2">
+            <Dialog open={isSummaryOpen} onOpenChange={setIsSummaryOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="lg" className="border-primary/20 hover:bg-primary/5" onClick={generateSummary}>
+                   <Sparkles className="mr-2 h-4 w-4 text-purple-500" /> AI Insights
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-lg">
+                <DialogHeader>
+                  <DialogTitle className="flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-purple-600" />
+                    AI Health Summary
+                  </DialogTitle>
+                  <DialogDescription>
+                    Analysis of your symptom logs for the last 30 days.
+                  </DialogDescription>
+                </DialogHeader>
+                
+                {isGeneratingSummary ? (
+                  <div className="py-12 flex flex-col items-center justify-center space-y-4">
+                    <div className="relative">
+                      <div className="h-12 w-12 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Sparkles className="h-5 w-5 text-purple-500 animate-pulse" />
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground animate-pulse">Analyzing symptom patterns...</p>
+                  </div>
+                ) : summaryData ? (
+                  <div className="space-y-6 py-4">
+                    <div className="bg-purple-50 border border-purple-100 rounded-lg p-4 space-y-3">
+                      <h4 className="font-semibold text-purple-900 flex items-center gap-2">
+                        <Activity className="h-4 w-4" /> Key Insight
+                      </h4>
+                      <p className="text-sm text-purple-800 leading-relaxed">
+                        {summaryData.keyInsight}
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1 border rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground flex items-center gap-1">
+                          <TrendingUp className="h-3 w-3" /> Pain Trend
+                        </div>
+                        <div className="text-xl font-bold">{summaryData.painTrend}</div>
+                      </div>
+                      <div className="space-y-1 border rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground flex items-center gap-1">
+                          <AlertTriangle className="h-3 w-3" /> Top Trigger
+                        </div>
+                        <div className="text-xl font-bold truncate" title={summaryData.commonTrigger}>{summaryData.commonTrigger}</div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                       <div className="flex justify-between text-sm">
+                         <span className="text-muted-foreground">Symptom Burden Score</span>
+                         <span className="font-bold">{summaryData.symptomBurden}/100</span>
+                       </div>
+                       <Progress value={summaryData.symptomBurden} className="h-2" />
+                    </div>
+
+                    <div className="bg-muted/30 rounded-lg p-4">
+                       <h4 className="font-semibold text-sm mb-2">Recommendation</h4>
+                       <p className="text-sm text-muted-foreground">
+                         {summaryData.recommendation}
+                       </p>
+                    </div>
+                  </div>
+                ) : null}
+              </DialogContent>
+            </Dialog>
+
+            <Dialog open={isLogOpen} onOpenChange={setIsLogOpen}>
+              <DialogTrigger asChild>
+                <Button size="lg" className="shadow-lg shadow-primary/20">
+                  <Plus className="mr-2 h-5 w-5" /> Log Symptoms
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle className="font-serif text-2xl">Daily Check-in</DialogTitle>
                 <DialogDescription>
@@ -189,8 +293,9 @@ export default function PatientDashboard() {
             </DialogContent>
           </Dialog>
         </div>
+      </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-8">
           {/* Calendar View */}
           <Card className="lg:col-span-1 h-fit">
             <CardHeader>
