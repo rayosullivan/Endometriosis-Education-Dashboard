@@ -10,7 +10,7 @@ import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useState } from "react";
 import { format } from "date-fns";
-import { Plus, Save, Activity, Droplet, MapPin, Zap, Calendar as CalendarIcon, History, Sparkles, TrendingUp, AlertTriangle } from "lucide-react";
+import { Plus, Save, Activity, Droplet, MapPin, Zap, Calendar as CalendarIcon, History, Sparkles, TrendingUp, AlertTriangle, Pill } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Progress } from "@/components/ui/progress";
@@ -22,6 +22,7 @@ type DiaryEntry = {
   flow?: string;
   painLocations: string[];
   triggers: string[];
+  medications: string[];
   notes: string;
 };
 
@@ -31,6 +32,7 @@ const INITIAL_ENTRY = {
   flow: "none",
   painLocations: [] as string[],
   triggers: [] as string[],
+  medications: [] as string[],
   notes: "",
 };
 
@@ -44,10 +46,10 @@ export default function PatientDashboard() {
   
   // Mock History Data
   const [history, setHistory] = useState<DiaryEntry[]>([
-    { date: new Date(2026, 1, 10), painLevel: 4, flow: "light", painLocations: ["Pelvis"], triggers: [], notes: "Mild cramping" },
-    { date: new Date(2026, 1, 11), painLevel: 7, flow: "medium", painLocations: ["Pelvis", "Back"], triggers: ["Bowel Movement"], notes: "Pain worsened in afternoon" },
-    { date: new Date(2026, 1, 12), painLevel: 6, flow: "medium", painLocations: ["Pelvis"], triggers: ["Stress"], notes: "Consistent ache all day" },
-    { date: new Date(2026, 1, 14), painLevel: 3, flow: "spotting", painLocations: ["Lower Back"], triggers: ["Exercise"], notes: "Felt better after yoga" },
+    { date: new Date(2026, 1, 10), painLevel: 4, flow: "light", painLocations: ["Pelvis"], triggers: [], medications: [], notes: "Mild cramping" },
+    { date: new Date(2026, 1, 11), painLevel: 7, flow: "medium", painLocations: ["Pelvis", "Back"], triggers: ["Bowel Movement"], medications: ["Paracetamol"], notes: "Pain worsened in afternoon" },
+    { date: new Date(2026, 1, 12), painLevel: 6, flow: "medium", painLocations: ["Pelvis"], triggers: ["Stress"], medications: ["Naproxen"], notes: "Consistent ache all day" },
+    { date: new Date(2026, 1, 14), painLevel: 3, flow: "spotting", painLocations: ["Lower Back"], triggers: ["Exercise"], medications: [], notes: "Felt better after yoga" },
   ]);
 
   const generateSummary = () => {
@@ -274,6 +276,40 @@ export default function PatientDashboard() {
                   </div>
                 </div>
 
+                {/* Medications */}
+                <div className="space-y-3">
+                  <Label className="text-base font-semibold flex items-center gap-2">
+                    <Pill className="h-4 w-4 text-green-600" /> Pain Relief / Medications
+                  </Label>
+                  <Select onValueChange={(val) => {
+                     if (!currentEntry.medications.includes(val)) {
+                        setCurrentEntry({...currentEntry, medications: [...currentEntry.medications, val]});
+                     }
+                  }}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Add medication..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {['Paracetamol', 'Codeine', 'Tramadol', 'Ponstan (Mefenamic Acid)', 'Diclofenac', 'Naproxen', 'Ibuprofen', 'Gabapentin'].map((med) => (
+                        <SelectItem key={med} value={med}>{med}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {currentEntry.medications.length === 0 && <span className="text-sm text-muted-foreground italic">No medications logged</span>}
+                    {currentEntry.medications.map(med => (
+                      <Badge 
+                        key={med} 
+                        variant="secondary" 
+                        className="gap-1 pr-1 bg-green-50 text-green-700 hover:bg-green-100"
+                        onClick={() => toggleSelection(currentEntry.medications, med, (val) => setCurrentEntry({...currentEntry, medications: val}))}
+                      >
+                        {med} <span className="text-xs ml-1 cursor-pointer">×</span>
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Notes */}
                 <div className="space-y-2">
                   <Label>Notes</Label>
@@ -393,6 +429,12 @@ export default function PatientDashboard() {
                              {entry.triggers.length > 0 && (
                                <div className="text-xs text-orange-600 flex items-center gap-1">
                                   <Zap className="h-3 w-3" /> Triggers: {entry.triggers.join(", ")}
+                               </div>
+                             )}
+
+                             {entry.medications && entry.medications.length > 0 && (
+                               <div className="text-xs text-green-700 flex items-center gap-1">
+                                  <Pill className="h-3 w-3" /> Meds: {entry.medications.join(", ")}
                                </div>
                              )}
 
