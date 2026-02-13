@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Activity, MessageCircle, FileText, Calendar, Lock } from "lucide-react";
 import { Link } from "wouter";
 import { useLanguage } from "@/lib/i18n";
+import heroImage from "@assets/ChatGPT_Image_Feb_13,_2026,_10_37_23_PM_1771022255876.png";
 
 export default function HomePage() {
   const { t } = useLanguage();
@@ -59,7 +60,7 @@ export default function HomePage() {
               <img
                 alt="Endometriosis Care Platform Hero"
                 className="aspect-[4/3] object-cover rounded-2xl bg-muted"
-                src="/hero-patient.png"
+                src={heroImage}
               />
             </div>
           </div>
