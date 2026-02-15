@@ -11,6 +11,7 @@ import SymptomCheckPage from "@/pages/symptom-check";
 import ChatAssistantPage from "@/pages/chat-assistant";
 import LoginPage from "@/pages/login";
 import PatientDashboard from "@/pages/patient-dashboard";
+import LearnPage from "@/pages/learn";
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/" component={HomePage} />
       <Route path="/login" component={LoginPage} />
       <Route path="/patient/dashboard" component={PatientDashboard} />
+      <Route path="/learn" component={LearnPage} />
       
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/symptom-check" component={SymptomCheckPage} />

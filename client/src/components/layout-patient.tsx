@@ -13,7 +13,7 @@ export default function LayoutPatient({ children }: { children: React.ReactNode 
     { href: "/", label: t("nav.home"), icon: Heart },
     { href: "/symptom-check", label: t("nav.symptom_checker"), icon: Activity },
     { href: "/chat", label: t("nav.care_assistant"), icon: MessageCircle },
-    { href: "/education", label: t("nav.learn"), icon: BookOpen },
+    { href: "/learn", label: t("nav.learn"), icon: BookOpen },
   ];
 
   return (
