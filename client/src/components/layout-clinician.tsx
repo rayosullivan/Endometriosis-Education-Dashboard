@@ -30,8 +30,7 @@ export default function LayoutClinician({ children }: { children: React.ReactNod
   const menuItems = [
     { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
     { title: "Content Manager", url: "/dashboard/content", icon: FileText },
-    { title: "Patient Reviews", url: "/dashboard/reviews", icon: Users },
-    { title: "Governance", url: "/dashboard/governance", icon: ShieldCheck },
+    { title: "Governance", url: "/dashboard/reviews", icon: Users },
     { title: "Settings", url: "/dashboard/settings", icon: Settings },
   ];
 
