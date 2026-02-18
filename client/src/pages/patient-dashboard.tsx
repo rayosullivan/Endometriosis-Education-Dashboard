@@ -125,7 +125,7 @@ export default function PatientDashboard() {
         <Tabs defaultValue="journal" className="w-full">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <div>
-              <h1 className="text-3xl font-serif font-bold text-foreground">My Health Journal</h1>
+              <h1 className="text-3xl font-serif font-bold text-foreground">My Endo Journal</h1>
               <p className="text-muted-foreground">Track your symptoms and manage your medical history.</p>
             </div>
             
