@@ -10,10 +10,12 @@ import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useState } from "react";
 import { format } from "date-fns";
-import { Plus, Save, Activity, Droplet, MapPin, Zap, Calendar as CalendarIcon, History, Sparkles, TrendingUp, AlertTriangle, Pill } from "lucide-react";
+import { Plus, Save, Activity, Droplet, MapPin, Zap, Calendar as CalendarIcon, History, Sparkles, TrendingUp, AlertTriangle, Pill, FileText, Camera, Upload, Scissors, ScanLine } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
 
 // Mock Data Structure for Diary Entry
 type DiaryEntry = {
@@ -24,6 +26,17 @@ type DiaryEntry = {
   triggers: string[];
   medications: string[];
   notes: string;
+};
+
+// Mock History Records
+type MedicalHistoryRecord = {
+  id: string;
+  type: 'surgery' | 'imaging' | 'medication';
+  title: string;
+  date: string;
+  provider?: string;
+  notes?: string;
+  attachments?: string[];
 };
 
 // Initial state for a new entry
@@ -44,6 +57,15 @@ export default function PatientDashboard() {
   const [summaryData, setSummaryData] = useState<any>(null);
   const [currentEntry, setCurrentEntry] = useState(INITIAL_ENTRY);
   
+  // New State for History
+  const [historyRecords, setHistoryRecords] = useState<MedicalHistoryRecord[]>([
+    { id: "1", type: "surgery", title: "Diagnostic Laparoscopy", date: "2024-05-15", provider: "Dr. Smith", notes: "Excision of stage 2 endometriosis.", attachments: ["report.pdf"] },
+    { id: "2", type: "imaging", title: "Pelvic MRI", date: "2024-03-10", provider: "City Imaging Center", notes: "Deep infiltrating endometriosis suspected.", attachments: ["mri_scan.jpg"] },
+    { id: "3", type: "medication", title: "Dienogest (Visanne)", date: "2024-06-01", notes: "Started 2mg daily.", attachments: [] },
+  ]);
+  const [isAddRecordOpen, setIsAddRecordOpen] = useState(false);
+  const [newRecordType, setNewRecordType] = useState<'surgery' | 'imaging' | 'medication'>('surgery');
+
   // Mock History Data
   const [history, setHistory] = useState<DiaryEntry[]>([
     { date: new Date(2026, 1, 10), painLevel: 4, flow: "light", painLocations: ["Pelvis"], triggers: [], medications: [], notes: "Mild cramping" },
@@ -99,85 +121,97 @@ export default function PatientDashboard() {
   return (
     <LayoutPatient>
       <div className="container max-w-6xl py-8 px-4">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-          <div>
-            <h1 className="text-3xl font-serif font-bold text-foreground">My Health Journal</h1>
-            <p className="text-muted-foreground">Track your symptoms daily to identify patterns.</p>
+        
+        <Tabs defaultValue="journal" className="w-full">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div>
+              <h1 className="text-3xl font-serif font-bold text-foreground">My Health Journal</h1>
+              <p className="text-muted-foreground">Track your symptoms and manage your medical history.</p>
+            </div>
+            
+            <div className="flex items-center gap-4">
+              <TabsList>
+                <TabsTrigger value="journal">Daily Journal</TabsTrigger>
+                <TabsTrigger value="history">Past History</TabsTrigger>
+              </TabsList>
+            </div>
           </div>
-          <div className="flex gap-2">
-            <Dialog open={isSummaryOpen} onOpenChange={setIsSummaryOpen}>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="lg" className="border-primary/20 hover:bg-primary/5" onClick={generateSummary}>
-                   <Sparkles className="mr-2 h-4 w-4 text-purple-500" /> AI Insights
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-lg">
-                <DialogHeader>
-                  <DialogTitle className="flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-purple-600" />
-                    AI Health Summary
-                  </DialogTitle>
-                  <DialogDescription>
-                    Analysis of your symptom logs for the last 30 days.
-                  </DialogDescription>
-                </DialogHeader>
-                
-                {isGeneratingSummary ? (
-                  <div className="py-12 flex flex-col items-center justify-center space-y-4">
-                    <div className="relative">
-                      <div className="h-12 w-12 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Sparkles className="h-5 w-5 text-purple-500 animate-pulse" />
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted-foreground animate-pulse">Analyzing symptom patterns...</p>
-                  </div>
-                ) : summaryData ? (
-                  <div className="space-y-6 py-4">
-                    <div className="bg-purple-50 border border-purple-100 rounded-lg p-4 space-y-3">
-                      <h4 className="font-semibold text-purple-900 flex items-center gap-2">
-                        <Activity className="h-4 w-4" /> Key Insight
-                      </h4>
-                      <p className="text-sm text-purple-800 leading-relaxed">
-                        {summaryData.keyInsight}
-                      </p>
-                    </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-1 border rounded-lg p-3">
-                        <div className="text-xs text-muted-foreground flex items-center gap-1">
-                          <TrendingUp className="h-3 w-3" /> Pain Trend
+          <TabsContent value="journal" className="space-y-8">
+            <div className="flex justify-end gap-2 mb-4">
+              <Dialog open={isSummaryOpen} onOpenChange={setIsSummaryOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="lg" className="border-primary/20 hover:bg-primary/5" onClick={generateSummary}>
+                     <Sparkles className="mr-2 h-4 w-4 text-purple-500" /> AI Insights
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-lg">
+                  <DialogHeader>
+                    <DialogTitle className="flex items-center gap-2">
+                      <Sparkles className="h-5 w-5 text-purple-600" />
+                      AI Health Summary
+                    </DialogTitle>
+                    <DialogDescription>
+                      Analysis of your symptom logs for the last 30 days.
+                    </DialogDescription>
+                  </DialogHeader>
+                  
+                  {isGeneratingSummary ? (
+                    <div className="py-12 flex flex-col items-center justify-center space-y-4">
+                      <div className="relative">
+                        <div className="h-12 w-12 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <Sparkles className="h-5 w-5 text-purple-500 animate-pulse" />
                         </div>
-                        <div className="text-xl font-bold">{summaryData.painTrend}</div>
                       </div>
-                      <div className="space-y-1 border rounded-lg p-3">
-                        <div className="text-xs text-muted-foreground flex items-center gap-1">
-                          <AlertTriangle className="h-3 w-3" /> Top Trigger
+                      <p className="text-sm text-muted-foreground animate-pulse">Analyzing symptom patterns...</p>
+                    </div>
+                  ) : summaryData ? (
+                    <div className="space-y-6 py-4">
+                      <div className="bg-purple-50 border border-purple-100 rounded-lg p-4 space-y-3">
+                        <h4 className="font-semibold text-purple-900 flex items-center gap-2">
+                          <Activity className="h-4 w-4" /> Key Insight
+                        </h4>
+                        <p className="text-sm text-purple-800 leading-relaxed">
+                          {summaryData.keyInsight}
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1 border rounded-lg p-3">
+                          <div className="text-xs text-muted-foreground flex items-center gap-1">
+                            <TrendingUp className="h-3 w-3" /> Pain Trend
+                          </div>
+                          <div className="text-xl font-bold">{summaryData.painTrend}</div>
                         </div>
-                        <div className="text-xl font-bold truncate" title={summaryData.commonTrigger}>{summaryData.commonTrigger}</div>
+                        <div className="space-y-1 border rounded-lg p-3">
+                          <div className="text-xs text-muted-foreground flex items-center gap-1">
+                            <AlertTriangle className="h-3 w-3" /> Top Trigger
+                          </div>
+                          <div className="text-xl font-bold truncate" title={summaryData.commonTrigger}>{summaryData.commonTrigger}</div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                         <div className="flex justify-between text-sm">
+                           <span className="text-muted-foreground">Symptom Burden Score</span>
+                           <span className="font-bold">{summaryData.symptomBurden}/100</span>
+                         </div>
+                         <Progress value={summaryData.symptomBurden} className="h-2" />
+                      </div>
+
+                      <div className="bg-muted/30 rounded-lg p-4">
+                         <h4 className="font-semibold text-sm mb-2">Recommendation</h4>
+                         <p className="text-sm text-muted-foreground">
+                           {summaryData.recommendation}
+                         </p>
                       </div>
                     </div>
+                  ) : null}
+                </DialogContent>
+              </Dialog>
 
-                    <div className="space-y-2">
-                       <div className="flex justify-between text-sm">
-                         <span className="text-muted-foreground">Symptom Burden Score</span>
-                         <span className="font-bold">{summaryData.symptomBurden}/100</span>
-                       </div>
-                       <Progress value={summaryData.symptomBurden} className="h-2" />
-                    </div>
-
-                    <div className="bg-muted/30 rounded-lg p-4">
-                       <h4 className="font-semibold text-sm mb-2">Recommendation</h4>
-                       <p className="text-sm text-muted-foreground">
-                         {summaryData.recommendation}
-                       </p>
-                    </div>
-                  </div>
-                ) : null}
-              </DialogContent>
-            </Dialog>
-
-            <Dialog open={isLogOpen} onOpenChange={setIsLogOpen}>
+              <Dialog open={isLogOpen} onOpenChange={setIsLogOpen}>
               <DialogTrigger asChild>
                 <Button size="lg" className="shadow-lg shadow-primary/20">
                   <Plus className="mr-2 h-5 w-5" /> Log Symptoms
@@ -329,9 +363,8 @@ export default function PatientDashboard() {
             </DialogContent>
           </Dialog>
         </div>
-      </div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-8">
           {/* Calendar View */}
           <Card className="lg:col-span-1 h-fit">
             <CardHeader>
@@ -449,8 +482,186 @@ export default function PatientDashboard() {
                 </ScrollArea>
               </CardContent>
             </Card>
+            </div>
           </div>
-        </div>
+        </TabsContent>
+
+        <TabsContent value="history">
+            <div className="flex justify-end mb-6">
+              <Dialog open={isAddRecordOpen} onOpenChange={setIsAddRecordOpen}>
+                <DialogTrigger asChild>
+                  <Button>
+                    <Plus className="mr-2 h-4 w-4" /> Add Record
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add Medical Record</DialogTitle>
+                    <DialogDescription>Document a past surgery, imaging, or medication.</DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label>Record Type</Label>
+                      <Select value={newRecordType} onValueChange={(v: any) => setNewRecordType(v)}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="surgery">Surgery</SelectItem>
+                          <SelectItem value="imaging">Imaging (MRI/CT/Ultrasound)</SelectItem>
+                          <SelectItem value="medication">Medication History</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label>Title / Procedure Name</Label>
+                      <Input placeholder={newRecordType === 'surgery' ? 'e.g. Laparoscopy' : newRecordType === 'imaging' ? 'e.g. Pelvic MRI' : 'e.g. Visanne'} />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Date</Label>
+                        <Input type="date" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Provider / Clinic</Label>
+                        <Input placeholder="e.g. Dr. Smith" />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>Notes / Findings</Label>
+                      <Textarea placeholder="Details about the procedure or medication..." />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>Attachments</Label>
+                      <div className="border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center text-muted-foreground hover:bg-muted/50 transition-colors cursor-pointer">
+                        <div className="flex gap-4 mb-2">
+                          <Button variant="outline" size="sm">
+                            <Camera className="mr-2 h-4 w-4" /> Take Photo
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <Upload className="mr-2 h-4 w-4" /> Upload PDF
+                          </Button>
+                        </div>
+                        <p className="text-xs">Supports JPG, PNG, PDF</p>
+                      </div>
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button onClick={() => setIsAddRecordOpen(false)}>Save Record</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
+
+            <div className="space-y-8">
+              {/* Surgeries Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-serif font-bold flex items-center gap-2">
+                  <Scissors className="h-5 w-5 text-primary" /> Surgical History
+                </h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {historyRecords.filter(r => r.type === 'surgery').map(record => (
+                    <Card key={record.id}>
+                      <CardHeader className="pb-2">
+                        <div className="flex justify-between items-start">
+                          <CardTitle className="text-base">{record.title}</CardTitle>
+                          <Badge variant="outline">{record.date}</Badge>
+                        </div>
+                        <CardDescription>{record.provider}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground">{record.notes}</p>
+                        {record.attachments && record.attachments.length > 0 && (
+                          <div className="mt-3 flex gap-2">
+                            {record.attachments.map(file => (
+                              <Badge key={file} variant="secondary" className="gap-1 text-xs">
+                                <FileText className="h-3 w-3" /> {file}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  ))}
+                  {historyRecords.filter(r => r.type === 'surgery').length === 0 && (
+                    <div className="col-span-full text-center text-muted-foreground text-sm py-8 border rounded-lg border-dashed">
+                      No surgeries recorded.
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Imaging Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-serif font-bold flex items-center gap-2">
+                  <ScanLine className="h-5 w-5 text-blue-600" /> Imaging Reports
+                </h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {historyRecords.filter(r => r.type === 'imaging').map(record => (
+                    <Card key={record.id}>
+                      <CardHeader className="pb-2">
+                        <div className="flex justify-between items-start">
+                          <CardTitle className="text-base">{record.title}</CardTitle>
+                          <Badge variant="outline">{record.date}</Badge>
+                        </div>
+                        <CardDescription>{record.provider}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground">{record.notes}</p>
+                        {record.attachments && record.attachments.length > 0 && (
+                          <div className="mt-3 flex gap-2">
+                            {record.attachments.map(file => (
+                              <Badge key={file} variant="secondary" className="gap-1 text-xs">
+                                <FileText className="h-3 w-3" /> {file}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  ))}
+                  {historyRecords.filter(r => r.type === 'imaging').length === 0 && (
+                    <div className="col-span-full text-center text-muted-foreground text-sm py-8 border rounded-lg border-dashed">
+                      No imaging reports recorded.
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Medications Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-serif font-bold flex items-center gap-2">
+                  <Pill className="h-5 w-5 text-green-600" /> Medication History
+                </h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {historyRecords.filter(r => r.type === 'medication').map(record => (
+                    <Card key={record.id}>
+                      <CardHeader className="pb-2">
+                        <div className="flex justify-between items-start">
+                          <CardTitle className="text-base">{record.title}</CardTitle>
+                          <Badge variant="outline">{record.date}</Badge>
+                        </div>
+                        <CardDescription>{record.provider}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground">{record.notes}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                  {historyRecords.filter(r => r.type === 'medication').length === 0 && (
+                    <div className="col-span-full text-center text-muted-foreground text-sm py-8 border rounded-lg border-dashed">
+                      No medication history recorded.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </LayoutPatient>
   );
