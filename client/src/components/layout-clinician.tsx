@@ -23,6 +23,7 @@ import {
   SidebarGroupLabel,
   SidebarGroupContent,
 } from "@/components/ui/sidebar";
+import hseLogo from "@assets/HSE-logo_1772456801625.jpg";
 
 export default function LayoutClinician({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
@@ -39,10 +40,13 @@ export default function LayoutClinician({ children }: { children: React.ReactNod
       <div className="flex min-h-screen w-full bg-sidebar">
         <Sidebar>
           <SidebarHeader className="border-b p-4">
-            <Link href="/" className="flex items-center gap-2 font-serif text-xl font-bold text-sidebar-primary">
-              <ShieldCheck className="h-6 w-6" />
-              <span>ELLA Pro</span>
-            </Link>
+            <div className="flex flex-col gap-4">
+              <Link href="/" className="flex items-center gap-2 font-serif text-xl font-bold text-sidebar-primary">
+                <ShieldCheck className="h-6 w-6" />
+                <span>ELLA Pro</span>
+              </Link>
+              <img src={hseLogo} alt="HSE Logo" className="h-8 object-contain self-start" />
+            </div>
             <div className="mt-2 text-xs text-muted-foreground px-1">
               Clinician Portal • v2.1.0
             </div>
@@ -97,6 +101,12 @@ export default function LayoutClinician({ children }: { children: React.ReactNod
             {children}
           </div>
         </main>
+        {/* Prototype Watermark */}
+        <div className="fixed bottom-4 right-4 z-50 pointer-events-none opacity-20 select-none">
+          <span className="text-2xl md:text-4xl font-black uppercase tracking-widest text-primary border-4 border-primary p-2 rounded-lg bg-background/50 backdrop-blur-sm -rotate-12 inline-block">
+            Prototype
+          </span>
+        </div>
       </div>
     </SidebarProvider>
   );

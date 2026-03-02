@@ -1,0 +1,143 @@
+1. Executive Summary (CIF-Formatted)
+Project Title
+
+EndoPath: A Digital Endometriosis Triage, Education and Care-Navigation Platform
+
+Lead Applicant
+
+Prof. Ray O’Sullivan
+Consultant (POCC23)
+Clinical Academic, Women’s Health and Fertility
+
+Project Duration
+
+12 months
+
+Funding Requested
+
+To be finalised within CIF envelope (€50,000–€200,000)
+
+Background and Rationale
+
+Endometriosis is a chronic, inflammatory gynaecological condition affecting approximately 1 in 10 women of reproductive age. Despite its prevalence, diagnostic delay remains unacceptably prolonged, typically ranging from 7–9 years, with significant consequences for physical health, mental wellbeing, workforce participation, and health-system efficiency. In Ireland, patients commonly experience fragmented care pathways, repeated GP consultations, inappropriate reassurance, and delayed access to specialist services.
+
+There is currently no standardised digital triage or education pathway embedded within Irish public healthcare to support early identification, prioritisation, and patient understanding of endometriosis.
+
+Innovation Description
+
+EndoPath is a clinician-designed digital platform that delivers:
+
+Structured symptom-based triage
+
+Evidence-based patient education aligned with ESHRE and national guidance
+
+Risk stratification to support appropriate referral prioritisation
+
+Outputs designed to integrate with Irish public outpatient workflows
+
+The platform has already been prototyped and demonstrated, positioning this project as a translational service-delivery innovation rather than speculative development.
+
+Model of Care Impact
+
+EndoPath introduces a redesigned outpatient access pathway, shifting from reactive referral-based care to proactive, structured triage and education. This enables earlier identification of high-risk patients, reduces inappropriate investigations, and improves clinic efficiency.
+
+Anticipated Outcomes
+
+Reduced time from first presentation to specialist review
+
+Improved patient-reported understanding and preparedness
+
+Improved quality and appropriateness of referrals
+
+Reduced outpatient congestion and inefficiency
+
+Strategic Alignment
+
+The project aligns with Sláintecare principles, the HSE Digital Health Strategy, and national priorities in women’s health and integrated care.
+
+Sustainability
+
+Once embedded, the platform will operate as part of routine care with minimal ongoing cost and clear potential for spread to other HSE sites.
+
+2. Clinical Director Letter of Support (Template)
+
+Re: Support for CIF Application – EndoPath Digital Endometriosis Platform
+
+Dear CIF Evaluation Committee,
+
+I am writing to confirm my full support for the Consultant Innovation Fund application submitted by Prof. Ray O’Sullivan for the project entitled EndoPath: A Digital Endometriosis Triage, Education and Care-Navigation Platform.
+
+Endometriosis represents a significant and well-recognised challenge within women’s health services, characterised by prolonged diagnostic delay, fragmented care pathways, and substantial patient morbidity. This project directly addresses these challenges through a structured, clinician-led digital innovation focused on service redesign rather than research alone.
+
+The proposed platform aligns with current HSE priorities, including Sláintecare, integrated care delivery, and appropriate use of digital tools to improve patient access and system efficiency. Importantly, the project is not intended for commercialisation and is designed solely for internal HSE service improvement.
+
+I am satisfied that appropriate governance, clinical oversight, and outcome measurement will be in place, and I support the implementation of this project within our service.
+
+Yours sincerely,
+
+[Name]
+Clinical Director
+[Hospital / Hospital Group / HSE Service]
+
+3. CIF-Aligned Application Narrative
+Clinical Problem
+
+Women with suspected endometriosis experience prolonged delays in diagnosis and access to specialist care, resulting in repeated consultations, psychological distress, and inefficient use of healthcare resources. Existing pathways rely heavily on unstructured referrals and inconsistent patient education.
+
+Proposed Solution
+
+EndoPath provides a digital triage and education platform that standardises early assessment, empowers patients with accurate information, and supports clinicians in prioritising referrals based on symptom complexity and risk.
+
+Innovation and Added Value
+
+This project represents a clear service-delivery innovation by redesigning the outpatient access pathway. It is neither a routine IT procurement nor a research registry. The innovation lies in the integration of structured triage, education, and care navigation into a single, clinician-designed digital workflow.
+
+Implementation Plan
+
+Refinement of existing prototype for HSE use
+
+Clinical validation of educational content
+
+Pilot deployment within an Irish public service
+
+Measurement of predefined patient, staff, and system outcomes
+
+Outcomes and Evaluation
+
+Evaluation will focus on measurable indicators including referral quality, patient-reported understanding, and time to specialist review, assessed at 6 and 12 months.
+
+Risk and Mitigation
+
+Key risks relate to adoption and integration, mitigated through clinician leadership, limited scope, and alignment with existing pathways.
+
+Sustainability and Spread
+
+The platform will be embedded into routine practice and is scalable to other sites and related chronic pelvic pain pathways.
+
+4. Final Submission Pack – Contents Checklist
+
+The completed CIF submission pack should include:
+
+Executive Summary (Section 1 above)
+
+Completed CIF Application Form
+
+Clinical Director Letter of Support (Section 2 above)
+
+Governance and Oversight Description
+
+Itemised Budget and Justification
+
+Outcomes and Metrics Table
+
+ICT / Digital Approval Statement
+
+Screenshots and description of existing prototype
+
+12-Month Implementation Timeline
+
+Each element directly maps to the CIF Final Submission Checklist and avoids all non-compliant categories (pure research, commercial development, routine resourcing, or vendor-led procurement) 
+
+hse cif
+
+.
