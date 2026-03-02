@@ -14,6 +14,7 @@ export default function LayoutPatient({ children }: { children: React.ReactNode 
     { href: "/symptom-check", label: t("nav.symptom_checker"), icon: Activity },
     { href: "/chat", label: t("nav.care_assistant"), icon: MessageCircle },
     { href: "/learn", label: t("nav.learn"), icon: BookOpen },
+    { href: "/user-guide", label: "User Guide", icon: ShieldAlert },
   ];
 
   return (
