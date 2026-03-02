@@ -16,6 +16,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
 
 // Mock Data Structure for Diary Entry
 type DiaryEntry = {
@@ -366,59 +367,90 @@ export default function PatientDashboard() {
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Calendar View */}
-          <Card className="lg:col-span-1 h-fit">
-            <CardHeader>
-              <CardTitle className="text-lg">Calendar</CardTitle>
-            </CardHeader>
-            <CardContent className="flex justify-center">
-               <Calendar 
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  className="rounded-md border shadow-sm"
-                  modifiers={{
-                    hasEntry: (d) => history.some(h => format(h.date, 'yyyy-MM-dd') === format(d, 'yyyy-MM-dd')),
-                    highPain: (d) => history.some(h => format(h.date, 'yyyy-MM-dd') === format(d, 'yyyy-MM-dd') && h.painLevel >= 7)
-                  }}
-                  modifiersClassNames={{
-                    hasEntry: "bg-primary/20 font-bold",
-                    highPain: "bg-destructive/20 text-destructive font-bold"
-                  }}
-               />
-            </CardContent>
-          </Card>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-1 h-fit"
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Calendar</CardTitle>
+              </CardHeader>
+              <CardContent className="flex justify-center">
+                 <Calendar 
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    className="rounded-md border shadow-sm"
+                    modifiers={{
+                      hasEntry: (d) => history.some(h => format(h.date, 'yyyy-MM-dd') === format(d, 'yyyy-MM-dd')),
+                      highPain: (d) => history.some(h => format(h.date, 'yyyy-MM-dd') === format(d, 'yyyy-MM-dd') && h.painLevel >= 7)
+                    }}
+                    modifiersClassNames={{
+                      hasEntry: "bg-primary/20 font-bold",
+                      highPain: "bg-destructive/20 text-destructive font-bold"
+                    }}
+                 />
+              </CardContent>
+            </Card>
+          </motion.div>
 
           {/* Diary Feed / Stats */}
           <div className="lg:col-span-2 space-y-6">
             {/* Quick Stats */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-               <Card className="bg-primary/5 border-none shadow-sm">
-                 <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-                    <span className="text-3xl font-bold text-primary">
-                      {history.filter(h => h.painLevel > 0).length}
-                    </span>
-                    <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mt-1">Pain Days (Month)</span>
-                 </CardContent>
-               </Card>
-               <Card className="bg-secondary/10 border-none shadow-sm">
-                 <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-                    <span className="text-3xl font-bold text-secondary-foreground">
-                       {(history.reduce((acc, curr) => acc + curr.painLevel, 0) / (history.length || 1)).toFixed(1)}
-                    </span>
-                    <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mt-1">Avg Pain Level</span>
-                 </CardContent>
-               </Card>
-               <Card className="bg-orange-50 border-none shadow-sm hidden sm:block">
-                 <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-                    <span className="text-3xl font-bold text-orange-600">
-                      {history.filter(h => h.triggers.length > 0).length}
-                    </span>
-                    <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mt-1">Trigger Events</span>
-                 </CardContent>
-               </Card>
+               <motion.div
+                 initial={{ opacity: 0, scale: 0.9 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 transition={{ duration: 0.4 }}
+               >
+                 <Card className="bg-primary/5 border-none shadow-sm h-full">
+                   <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
+                      <span className="text-3xl font-bold text-primary">
+                        {history.filter(h => h.painLevel > 0).length}
+                      </span>
+                      <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mt-1">Pain Days (Month)</span>
+                   </CardContent>
+                 </Card>
+               </motion.div>
+               <motion.div
+                 initial={{ opacity: 0, scale: 0.9 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 transition={{ duration: 0.4, delay: 0.1 }}
+               >
+                 <Card className="bg-secondary/10 border-none shadow-sm h-full">
+                   <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
+                      <span className="text-3xl font-bold text-secondary-foreground">
+                         {(history.reduce((acc, curr) => acc + curr.painLevel, 0) / (history.length || 1)).toFixed(1)}
+                      </span>
+                      <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mt-1">Avg Pain Level</span>
+                   </CardContent>
+                 </Card>
+               </motion.div>
+               <motion.div
+                 initial={{ opacity: 0, scale: 0.9 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 transition={{ duration: 0.4, delay: 0.2 }}
+                 className="hidden sm:block"
+               >
+                 <Card className="bg-orange-50 border-none shadow-sm h-full">
+                   <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
+                      <span className="text-3xl font-bold text-orange-600">
+                        {history.filter(h => h.triggers.length > 0).length}
+                      </span>
+                      <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mt-1">Trigger Events</span>
+                   </CardContent>
+                 </Card>
+               </motion.div>
             </div>
 
             {/* Recent Entries */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
@@ -482,6 +514,7 @@ export default function PatientDashboard() {
                 </ScrollArea>
               </CardContent>
             </Card>
+            </motion.div>
             </div>
           </div>
         </TabsContent>

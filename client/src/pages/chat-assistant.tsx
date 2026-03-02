@@ -9,6 +9,7 @@ import { useState, useRef, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { SAFETY_TRIGGERS, MOCK_RESPONSES, SYSTEM_PROMPT } from "@/lib/rag-system-prompts";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Message = {
   id: string;
@@ -181,9 +182,14 @@ export default function ChatAssistantPage() {
           <CardContent className="flex-1 p-0 overflow-hidden relative">
              <ScrollArea className="h-full p-4 md:p-6">
                 <div className="space-y-6 max-w-3xl mx-auto">
+                  <AnimatePresence>
                   {messages.filter(m => m.role !== 'system').map((msg) => (
-                    <div
+                    <motion.div
                       key={msg.id}
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.3 }}
                       className={`flex gap-4 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
                     >
                       <Avatar className={`h-8 w-8 ${msg.role === "assistant" ? "bg-primary/10" : "bg-secondary"}`}>
@@ -224,8 +230,9 @@ export default function ChatAssistantPage() {
                           </div>
                         )}
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
+                  </AnimatePresence>
                 </div>
              </ScrollArea>
           </CardContent>

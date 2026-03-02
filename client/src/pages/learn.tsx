@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, ExternalLink, Calendar, BookOpen, Filter, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { format } from "date-fns";
+import { motion } from "framer-motion";
 
 // Mock Data for Articles
 type Article = {
@@ -140,8 +141,15 @@ export default function LearnPage() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredArticles.length > 0 ? (
-            filteredArticles.map((article) => (
-              <Card key={article.id} className="flex flex-col border-none shadow-md hover:shadow-lg transition-shadow group h-full">
+            filteredArticles.map((article, index) => (
+              <motion.div
+                key={article.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="h-full"
+              >
+              <Card className="flex flex-col border-none shadow-md hover:shadow-lg transition-shadow group h-full">
                 <CardHeader>
                   <div className="flex justify-between items-start mb-2">
                     <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground hover:bg-secondary/70">
@@ -174,6 +182,7 @@ export default function LearnPage() {
                   </Button>
                 </CardFooter>
               </Card>
+              </motion.div>
             ))
           ) : (
             <div className="col-span-full py-12 text-center text-muted-foreground">

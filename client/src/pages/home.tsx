@@ -7,6 +7,8 @@ import { Link } from "wouter";
 import { useLanguage } from "@/lib/i18n";
 import heroImage from "@assets/ChatGPT_Image_Feb_13,_2026,_10_37_23_PM_1771022255876.png";
 
+import { motion } from "framer-motion";
+
 export default function HomePage() {
   const { t } = useLanguage();
 
@@ -16,7 +18,12 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-secondary/30 py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6 relative z-10">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center">
-            <div className="flex flex-col justify-center space-y-8">
+            <motion.div 
+              className="flex flex-col justify-center space-y-8"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
               <div className="space-y-4">
                 <Badge variant="outline" className="w-fit bg-background/50 backdrop-blur border-primary/20 text-primary">
                   {t("hero.badge")}
@@ -55,14 +62,20 @@ export default function HomePage() {
                    {t("hero.clinician_verified")}
                  </span>
               </div>
-            </div>
-            <div className="mx-auto lg:mr-0 rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border border-white/50 bg-white/30 backdrop-blur-sm p-2 rotate-1 hover:rotate-0 transition-transform duration-500">
+            </motion.div>
+            <motion.div 
+              className="mx-auto lg:mr-0 rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border border-white/50 bg-white/30 backdrop-blur-sm p-2"
+              initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
+              animate={{ opacity: 1, scale: 1, rotate: 1 }}
+              transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 100 }}
+              whileHover={{ rotate: 0, scale: 1.02 }}
+            >
               <img
                 alt="Endometriosis Care Platform Hero"
                 className="aspect-[4/3] object-cover rounded-2xl bg-muted"
                 src={heroImage}
               />
-            </div>
+            </motion.div>
           </div>
         </div>
         
@@ -79,16 +92,34 @@ export default function HomePage() {
       <section className="py-12 md:py-24 lg:py-32 bg-background">
         <div className="container px-4 md:px-6">
           <div className="text-center mb-16 max-w-2xl mx-auto space-y-4">
-            <h2 className="text-3xl font-serif font-bold tracking-tighter sm:text-4xl text-foreground">
+            <motion.h2 
+              className="text-3xl font-serif font-bold tracking-tighter sm:text-4xl text-foreground"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
               {t("features.title")}
-            </h2>
-            <p className="text-muted-foreground md:text-lg">
+            </motion.h2>
+            <motion.p 
+              className="text-muted-foreground md:text-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
               {t("features.description")}
-            </p>
+            </motion.p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="border-none shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-shadow">
-              <CardHeader>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Card className="border-none shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-shadow h-full">
+                <CardHeader>
                 <Activity className="h-10 w-10 text-primary mb-2" />
                 <CardTitle className="font-serif">{t("card.tracking.title")}</CardTitle>
                 <CardDescription>
@@ -129,9 +160,16 @@ export default function HomePage() {
                    <Button variant="link" className="p-0 h-auto text-primary">Chat Now <ArrowRight className="ml-1 h-4 w-4" /></Button>
                 </Link>
               </CardFooter>
-            </Card>
+              </Card>
+            </motion.div>
 
-            <Card className="border-none shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-shadow">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+            <Card className="border-none shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-shadow h-full">
               <CardHeader>
                 <FileText className="h-10 w-10 text-secondary-foreground mb-2" />
                 <CardTitle className="font-serif">{t("card.gp.title")}</CardTitle>
@@ -152,6 +190,7 @@ export default function HomePage() {
                 </Link>
               </CardFooter>
             </Card>
+            </motion.div>
           </div>
         </div>
       </section>
