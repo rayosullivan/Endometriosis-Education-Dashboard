@@ -76,9 +76,27 @@ export default function ChatAssistantPage() {
       return response;
     }
 
-    // Default or unknown logic (simple keyword check for demo)
-    if (lowerInput.includes("symptom") || lowerInput.includes("endometriosis") || lowerInput.includes("pain") || lowerInput.includes("help")) {
-       return MOCK_RESPONSES.default;
+    // Conversational logic
+    if (lowerInput.match(/\b(hi|hello|hey|greetings|morning|afternoon)\b/)) {
+      return MOCK_RESPONSES.greeting;
+    }
+    if (lowerInput.match(/\b(symptom|symptoms|pain|cramp|cramps|hurt|hurts|ache)\b/)) {
+      return MOCK_RESPONSES.symptoms;
+    }
+    if (lowerInput.match(/\b(treat|treatment|medication|pill|nsaid|hormone|manage)\b/)) {
+      return MOCK_RESPONSES.treatment;
+    }
+    if (lowerInput.match(/\b(surgery|laparoscopy|excision|ablation|operate)\b/)) {
+      return MOCK_RESPONSES.surgery;
+    }
+    if (lowerInput.match(/\b(fertility|pregnant|pregnancy|baby|conceive)\b/)) {
+      return MOCK_RESPONSES.fertility;
+    }
+    if (lowerInput.match(/\b(hard|difficult|struggle|frustrating|tired|exhausting)\b/)) {
+      return MOCK_RESPONSES.affirmation;
+    }
+    if (lowerInput.includes("endometriosis") || lowerInput.includes("what is")) {
+      return MOCK_RESPONSES.default;
     }
 
     return MOCK_RESPONSES.unknown;

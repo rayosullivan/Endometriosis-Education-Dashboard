@@ -16,6 +16,38 @@ export const SAFETY_TRIGGERS = {
 };
 
 export const MOCK_RESPONSES = {
+  greeting: {
+    content: "Hello! I'm here to support you with information and guidance about endometriosis. How are you feeling today? Are you experiencing any specific symptoms, or do you have a question about management and care?",
+    citations: []
+  },
+  symptoms: {
+    content: "Common symptoms of endometriosis include painful periods (dysmenorrhoea), pain during intercourse (dyspareunia), and chronic pelvic pain. Some people also experience fatigue, bowel or bladder issues, and difficulty getting pregnant. What specific symptoms are you dealing with?",
+    citations: [
+      { title: "ESHRE Guideline: Symptoms", source: "ESHRE 2022" }
+    ]
+  },
+  treatment: {
+    content: "Treatment for endometriosis is very individualized. It typically falls into a few categories: pain relief (like NSAIDs), hormone therapy (like the combined pill or Mirena coil), and surgery (such as laparoscopy). It's best to discuss your specific goals with your specialist. Would you like to know more about a specific treatment?",
+    citations: [
+      { title: "NG73: Management options", source: "NICE 2017" }
+    ]
+  },
+  surgery: {
+    content: "Surgery, typically a laparoscopy, is often used to both diagnose endometriosis definitively and treat it by removing the endometriosis tissue (excision or ablation). It can be very effective for pain relief, but it's important to weigh the risks and recovery time with your surgeon.",
+    citations: [
+      { title: "Surgical Management", source: "NICE NG73" }
+    ]
+  },
+  fertility: {
+    content: "Endometriosis can sometimes affect fertility, but many people with the condition do go on to have successful pregnancies. If you're planning to conceive, it's a good idea to discuss this with your specialist, as it can influence your treatment plan.",
+    citations: [
+      { title: "Endometriosis and Fertility", source: "ESHRE 2022" }
+    ]
+  },
+  affirmation: {
+    content: "I completely understand. Navigating endometriosis can be incredibly complex and frustrating. It's really important that your experiences are heard and validated. How else can I support you right now?",
+    citations: []
+  },
   default: {
     content: "Endometriosis is defined as the presence of endometrial-like tissue outside the uterus, which induces a chronic, inflammatory reaction. Common symptoms include dysmenorrhoea (painful periods), dyspareunia (pain during intercourse), and chronic pelvic pain. Management options range from pain relief and hormonal treatments to surgery, depending on your individual needs and life stage.",
     citations: [
