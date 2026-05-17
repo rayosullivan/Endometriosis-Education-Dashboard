@@ -1,0 +1,235 @@
+Up-to-date surgical and medical treatments for endometriosis
+Executive summary
+Prof.Ray, the most current, authoritative care pathways for endometriosis in England and Ireland converge on several core principles: earlier recognition and empiric treatment (rather than waiting for surgical confirmation), structured referral into specialist services for complex disease, shared decision-making based on pain and fertility priorities, and long-term relapse prevention after any effective intervention. 
+
+Across National Institute for Health and Care Excellence guidance (NG73, update 2024), the 2025 Irish national clinical practice guideline from Royal College of Physicians of Ireland, and the 2022 guideline from European Society of Human Reproduction and Embryology, first-line symptom control typically uses hormonal suppression (combined hormonal contraception or progestogens) alongside analgesia when appropriate, with escalation to GnRH analogues/antagonists and/or surgery when symptoms persist, treatment is not tolerated, or when imaging suggests endometrioma/deep disease. 
+
+For medical therapy, the key “newer” evidence base is the class of oral GnRH antagonists with add-back therapy. Randomised evidence and regulatory documents show clinically meaningful improvements in dysmenorrhoea and non-menstrual pelvic pain by ~24 weeks, with bone-density monitoring and duration limits as central safety constraints. 
+
+For surgery, the evidence supports laparoscopic management as the default operative route, with long-term outcomes driven more by appropriate patient selection, lesion subtype (superficial vs ovarian vs deep infiltrating endometriosis), surgical completeness, and relapse prevention than by “one technique fits all”. High-quality synthesis (Cochrane) still finds uncertainty for some pain endpoints and for excision-versus-ablation superiority in mild/superficial disease, but specialist-centre cohort data and deep-disease trials support meaningful improvement in pain and quality of life with acceptable complication rates when performed in experienced multidisciplinary teams. 
+
+From a health-system perspective, the Irish model explicitly codifies stepped-care from primary care to regional and supra-regional specialist services with defined access criteria (notably bowel/urinary tract involvement for the highest tier). In England, NICE specifies managed clinical networks and specialist endometriosis services; and NICE technology appraisals in 2025 recommend (and mandate funding timelines for) relugolix-combination therapy and linzagolix-with-add-back for adults of reproductive age with persistent symptoms after prior medical or surgical treatment, reflecting “value for money” assessments within the NHS. 
+
+Evidence base and guideline landscape
+Endometriosis is framed by World Health Organization as a chronic condition with no definitive cure; treatments aim to control symptoms, limit long-term impacts, and support fertility goals. The WHO also emphasises long diagnostic delays and supports clinical diagnosis based on symptoms and imaging without requiring surgery before initiating treatment. 
+
+In 2026, American College of Obstetricians and Gynecologists messaging (summarised in JAMA) similarly highlights the need to reduce diagnostic delay and endorses presumptive clinical diagnosis based on history, examination, and imaging, enabling empiric medical management without mandatory surgical confirmation for all patients. 
+
+In England, NICE NG73 (published 2017, updated 2024; reviewed 2025) is the most central national pathway. It places primary-care ultrasound (transvaginal ultrasound for all with suspected endometriosis) and parallel referral/investigation alongside initial pharmacological treatment, and it defines routes into gynaecology services versus specialist endometriosis services (centres) for endometrioma, deep endometriosis (bowel/bladder/ureter), or extra-pelvic disease. 
+
+In Ireland, the 2025 Irish national clinical guideline recommends first-line hormonal treatment (combined hormonal contraception or progestogens) for endometriosis-associated pain, with GnRH agonists or antagonists (with add-back hormone therapy) as second line; it strongly emphasises laparoscopy over laparotomy when surgery is undertaken, surgical expertise for deep disease, careful ovarian-sparing technique for endometrioma surgery, and realism that hysterectomy does not necessarily cure symptoms. 
+
+Ireland also published a national service framework in October 2025 via Health Service Executive, defining a continuum of care and specifying empirical hormonal suppression as “most appropriate” first-line treatment for suspected endometriosis in those not actively trying to conceive, while setting tiered access criteria for local, regional, and supra-regional specialist services (including bowel/urinary tract involvement criteria for supra-regional care). 
+
+Within the UK professional-college landscape, Royal College of Obstetricians and Gynaecologists has archived its Green-top Guideline No. 24 and directs clinicians to ESHRE guidance and NICE quality standards instead—functionally reinforcing ESHRE/NICE as the current authoritative references for practice. 
+
+Comparative table of major guideline recommendations
+Domain	NICE NG73 (England; update 2024)	Irish National Clinical Guideline (2025)	ESHRE Guideline (2022)	Irish Service Framework (2025)
+Clinical diagnosis vs mandatory laparoscopy	Imaging (TVUS) for all suspected cases; do not exclude if imaging normal; laparoscopy considered even if imaging normal, but not mandatory before starting treatment. 
+Emphasises timely management; supports structured referral; includes imaging and surgical confirmation where needed. 
+Recommends symptom relief efforts via empiric treatment or after diagnosis; integrates imaging and clinical judgement. 
+“Presumed diagnosis” and primary-care initiation of treatment; acknowledges definitive diagnosis often needs laparoscopy but supports treatment based on clinical evaluation. 
+First-line medical therapy for pain	NSAIDs/paracetamol trial; offer hormonal treatment (COCP or a progestogen). 
+First line hormonal treatment (combined hormonal contraception or progestogens) for pain. 
+Recommends hormone treatment options (combined hormonal contraception, progestogens) for dyspareunia/dysmenorrhoea/non-menstrual pain; continuous COCP may be offered for dysmenorrhoea. 
+Empirical hormone treatment ± NSAIDs in primary care; “back-to-back” regimens noted for some using combined hormonal contraception. 
+Second-line medical therapy	Adds links to TA guidance for oral GnRH antagonists (linzagolix+add-back; relugolix combination therapy) after prior medical or surgical treatment. 
+GnRH agonists or antagonists with add-back offered second line. 
+GnRH agonists recommended (second line; consider add-back to prevent bone loss), and GnRH antagonists can be considered (also as second line). 
+Stepped escalation at secondary care; networked referral to regional/supra-regional services when needed. 
+Surgical route	Laparoscopic surgery unless contraindicated; intra-operative imaging record; treat uncomplicated peritoneal disease/endometrioma at diagnostic laparoscopy if present and consented. 
+Laparoscopy preferred over laparotomy; counsel on risks/benefits and possible further surgery. 
+Surgery recommendations emphasise patient selection and subtype-specific approaches; endometrioma: cystectomy rather than drainage/coagulation; CO₂ laser vaporisation considered in selected contexts. 
+Surgery concentrated by disease complexity (regional vs supra-regional); multidisciplinary approach in higher tiers. 
+Deep infiltrating endometriosis and bowel/urinary involvement	Refer to specialist endometriosis service for deep disease involving bowel/bladder/ureter; consider specialist ultrasound/MRI for extent; pre-op GnRH agonists may be considered as adjunct for bowel/bladder/ureter surgery. 
+Recommends deep disease surgery by experienced surgeon, preferably multidisciplinary; deep disease removal may reduce pain/QoL. 
+Deep endometriosis managed with expertise; highlights limitations and risks, including functional outcomes and nerve injury considerations. 
+Supra-regional criteria include confirmed bowel/urinary tract involvement; consultant-to-consultant referral. 
+Endometrioma surgery and ovarian reserve	Consider excision rather than ablation for endometriomas, accounting for fertility desire and ovarian reserve; fertility section notes ablation/drainage may preserve reserve more than cystectomy. 
+Cystectomy or CO₂ laser vaporisation instead of drainage/coagulation; minimise ovarian damage. 
+Cystectomy preferred over drainage/coagulation; caution to minimise ovarian damage; cystectomy vs CO₂ laser vaporisation both considered. 
+Imaging and triage; complex surgery escalated; fertility hubs integrated in pathway. 
+Fertility priority	Do not offer hormonal treatment (alone or with surgery) to improve spontaneous pregnancy rates; offer excision/ablation + adhesiolysis for non–bowel/bladder/ureter disease to improve chance of spontaneous pregnancy; counsel carefully in deep disease. 
+Recommends against hormonal suppression in those trying to conceive; operative laparoscopy for stage I–II-associated infertility improves ongoing clinical pregnancy; individualised decisions in endometrioma-associated infertility. 
+Counselling on fertility preservation in extensive ovarian endometriosis; benefit uncertain but discussion recommended. 
+Fertility referral pathways: earlier referral thresholds and integration with fertility hubs. 
+
+Treatment pathways and escalation
+The following pathways synthesise the common “spine” of NICE NG73, the 2025 Irish guideline, and the 2025 Irish services framework: early symptom recognition; trial of empiric pain control and hormonal suppression (if not trying to conceive); imaging—particularly TVUS; escalation to specialist referral for suspected deep disease/endometrioma; and long-term relapse prevention for those not immediately pursuing pregnancy. 
+
+mermaid
+Copy
+flowchart TD
+A[Presentation: cyclical pelvic pain, dysmenorrhoea, dyspareunia, bowel/urinary cyclical symptoms, +/- infertility] --> B[Initial assessment: history, examination, symptom diary]
+B --> C{Trying to conceive now?}
+C -->|No| D[Empiric management: NSAIDs/analgesia + hormonal suppression (CHC or progestogen)]
+D --> E[Transvaginal ultrasound +/- specialist TVUS or MRI depending on suspicion]
+E --> F{Imaging suggests endometrioma or deep disease (bowel/bladder/ureter)?}
+F -->|Yes| G[Refer to specialist endometriosis service / MDT]
+F -->|No or indeterminate| H[Secondary care gynaecology evaluation]
+H --> I{Symptoms controlled?}
+I -->|Yes| J[Continue medical therapy; periodic review; address QoL, pelvic floor, psychology as needed]
+I -->|No| K{Patient prefers surgery or medical escalation?}
+K -->|Escalate medical| L[Second-line endocrine suppression: GnRH agonist/antagonist with add-back as appropriate]
+K -->|Surgery| M[Laparoscopic surgery with planned treatment; document findings; subtype-specific approach]
+M --> N[Post-op relapse prevention: long-term hormonal suppression if not pursuing pregnancy]
+G --> M
+L --> I
+Stage I–II with infertility
+
+Endometrioma
+
+Deep disease bowel/urinary
+
+Fertility priority pathway
+
+Parallel fertility evaluation: age, ovarian reserve, partner factors, duration
+
+Imaging: TVUS for endometrioma/deep disease; MRI if deep disease suspected
+
+Disease subtype and symptom burden
+
+Operative laparoscopy +/- adhesiolysis may improve ongoing pregnancy
+
+Decide: surgery vs proceed to ART; consider ovarian reserve impact; minimise repeat surgery
+
+Individualised counselling: surgical risks vs ART; MDT input
+
+Attempt conception / consider IUI/IVF as indicated
+
+
+
+Show code
+Surgical management
+Core approaches and patient selection
+Current guidelines consistently privilege laparoscopy over laparotomy for endometriosis surgery when feasible, combined with explicit pre-operative counselling about what surgery entails, potential benefits and risks, and the possibility of needing further intervention. 
+
+A key clinical nuance (and my view, strongly supported by the evidence base) is that “surgery” should not be treated as a monolith. The decision is best framed by (i) lesion subtype (superficial peritoneal vs ovarian endometrioma vs deep infiltrating), (ii) symptom phenotype (pain subtype(s), bowel/urinary symptoms, dyspareunia), (iii) fertility timeline, (iv) prior treatments and surgical history, and (v) the availability of an experienced multidisciplinary team when deep disease is suspected. 
+
+Excision vs ablation
+The Irish guideline explicitly supports considering excision instead of ablation for endometriosis-associated pain while acknowledging the heterogeneity and limitations of the comparative literature. It summarises older meta-analysis evidence suggesting excision superiority for some pain outcomes, while also citing a more recent meta-analysis finding no significant difference in pain scores at 12 months. 
+
+The best global synthesis from Cochrane highlights lingering uncertainty: laparoscopic surgery compared with diagnostic laparoscopy may increase intrauterine pregnancy rates, but effects on overall pain are uncertain; and excision vs ablation superiority for pain relief remains uncertain (with limited RCT data and reporting limitations). 
+
+Practical interpretation: when histological confirmation is relevant, when disease boundaries are visualised and resection is feasible, and when deep disease is present (where superficial ablation is anatomically inadequate), excision is typically favoured. Conversely, in minimal/superficial disease, the incremental benefit of excision over ablation for pain at 12 months is not robustly established, so surgeon skill, operative time, complication risk, and patient preference become proportionally more important. 
+
+Endometrioma surgery and fertility-sparing considerations
+Guidelines converge on avoiding simple drainage/coagulation where possible. The Irish guideline recommends cystectomy or CO₂ laser vaporisation rather than drainage/coagulation, and it explicitly warns to minimise ovarian damage during surgery. 
+
+ESHRE recommends cystectomy rather than drainage/coagulation for ovarian endometrioma because it reduces recurrence of endometrioma and endometriosis-associated pain, while also allowing consideration of CO₂ laser vaporisation as an alternative with similar recurrence beyond the first post-operative year (with early recurrence possibly lower after cystectomy). 
+
+NICE adds a fertility-focused caveat: in those trying to conceive, either cystectomy or drainage/ablation may improve spontaneous pregnancy rates, but drainage/ablation may preserve ovarian reserve more than cystectomy—so ovarian reserve testing and individualised counselling are essential, especially before repeat surgery. 
+
+Clinical synthesis: endometrioma surgery is a balancing act between recurrence prevention and ovarian reserve preservation. The evidence base and guidelines support (i) avoiding repeat surgery when feasible, (ii) using techniques that minimise thermal injury and healthy ovarian tissue loss, and (iii) integrating reproductive planning early (including discussing fertility preservation in extensive ovarian disease, where ESHRE notes benefit is uncertain but counselling is recommended). 
+
+Deep infiltrating endometriosis with bowel/urinary tract involvement
+Pathways are consistent: suspected deep endometriosis involving bowel/bladder/ureter triggers specialist referral and multidisciplinary assessment (gynaecology plus colorectal and/or urology involvement, and specialist imaging expertise). 
+
+A landmark randomised trial (ENDORE) in deep rectal endometriosis (n=60) compared conservative rectal surgery (shaving/disc excision) with segmental resection. At 24 months, no statistically significant differences were found in overall functional outcomes between arms, while segmental resection carried a significant risk of bowel stenosis. The trial also highlights a key counselling point: even with complete nodule removal, abnormal bowel function can persist at clinically meaningful rates. 
+
+Complementing RCT evidence, the large multicentre prospective cohort from specialist centres (rectovaginal endometriosis; planned laparoscopic excision in 4,721 cases) reported substantial reductions in multiple pain domains and improved quality of life (EuroQol median improving from 55/100 to 80/100 at 6 months) sustained to 2 years, with an overall complication incidence of 6.8% and gastrointestinal and urinary-tract complication rates about ~1% each. 
+
+Clinical synthesis: for deep disease, the evidence best supports (i) concentrating surgery in specialist MDT services, (ii) tailoring bowel techniques (shaving/disc vs segmental) to lesion characteristics and stenosis risk rather than assuming routine resection is superior, and (iii) explicitly counselling on functional outcomes and complication profiles, not only pain reduction. 
+
+Hysterectomy and nerve-sparing strategies
+Guidelines consistently restrict hysterectomy to those who no longer wish to conceive and have not responded to conservative options, while emphasising that hysterectomy is not a guaranteed cure for endometriosis symptoms. The Irish guideline recommends total hysterectomy rather than subtotal, excision of all visible lesions if hysterectomy is performed, and combined oestrogen–progestogen menopausal hormone therapy if MHT is required post-operatively in those with endometriosis history. 
+
+ESHRE similarly notes hysterectomy can be considered (with or without oophorectomy) with removal of all visible lesions for those who no longer wish to conceive and have failed conservative treatments, and prefers total hysterectomy when performed. 
+
+NICE’s position is more conditional: hysterectomy is “in combination” with endometriosis surgery when indicated for other coexisting pathology (e.g., adenomyosis or heavy menstrual bleeding), and should include excision of all visible endometriosis lesions while counselling on recurrence and hormone replacement considerations. 
+
+Nerve-sparing: While RCT-grade evidence for nerve-sparing variants is limited (and often embedded within deep-disease surgery rather than isolated), deep endometriosis surgery explicitly acknowledges risks to hypogastric and splanchnic/inferior hypogastric plexus structures (with consequent bowel/bladder dysfunction). The ENDORE operative description highlights dissection choices intended to avoid nerve injury, underscoring why deep endometriosis care is best delivered in true MDT specialist centres. 
+
+Medical management
+First-line hormonal suppression
+ESHRE recommends combined hormonal contraceptives (oral/vaginal ring/transdermal) to reduce dyspareunia, dysmenorrhoea, and non-menstrual pain; continuous use can be offered for dysmenorrhoea. It also recommends progestogens to reduce endometriosis-associated pain and supports levonorgestrel-releasing intrauterine systems or etonogestrel implants as options for pain reduction. 
+
+NICE similarly offers hormonal treatment (COCP or progestogen) for suspected, confirmed, or recurrent endometriosis, with the explicit reassurance that hormonal treatment reduces pain and does not have a permanent negative effect on subsequent fertility. 
+
+The Irish guideline codifies first-line hormonal treatment (combined hormonal contraception or progestogens) and links choice to shared decision-making that includes desire to conceive, side-effect profiles, cost, and availability. 
+
+In the Irish services framework, empirical hormonal suppression (oral contraceptive pill or progestin-only pill) is described as the most appropriate first-line approach for suspected endometriosis in those not actively seeking to conceive, with escalation to secondary care if symptom control is insufficient. 
+
+GnRH agonists and add-back therapy
+ESHRE recommends GnRH agonists for endometriosis-associated pain (generally as second line, reflecting side-effect profiles) and recommends considering combined hormonal add-back therapy alongside GnRH agonist treatment to prevent bone loss and hypo-oestrogenic symptoms. 
+
+The Irish guideline similarly recommends GnRH agonists or antagonists with add-back hormone replacement therapy as second-line treatment for endometriosis-associated pain. 
+
+Cochrane synthesis for GnRH analogues indicates modest pain reduction versus placebo/progestogens but highlights bone mineral density loss as a key harm signal, supporting why add-back therapy and duration limits are central to modern practice. 
+
+Oral GnRH antagonists
+This is the fastest-moving area of medical treatment, and it is now embedded in national pathways through technology appraisals rather than solely “off-guideline” practice.
+
+Relugolix combination therapy (relugolix + oestradiol + norethisterone acetate)
+Two pivotal placebo-controlled trials (S1 and S2) show clinically and statistically significant responder advantages for dysmenorrhoea and non-menstrual pelvic pain at 24 weeks, with responder definitions incorporating analgesic non-escalation. 
+
+Longer-term extension data (up to 104 weeks) indicate sustained responder rates (dysmenorrhoea ~84.8%, non-menstrual pelvic pain ~75.8% at 104 weeks/EOT), with bone mineral density showing an initial decline <1% then plateauing/stabilising over time in the extension cohort. 
+
+Regulatory constraints focus on thromboembolic risk (as an oestrogen–progestin combination), mood effects, and bone loss monitoring and duration limitation. 
+
+In England, NICE TA1057 (April 2025) recommends relugolix–estradiol–norethisterone within its marketing authorisation for adults of reproductive age after prior medical or surgical treatment, explicitly stating it should be funded in the NHS and that cost-effectiveness estimates fall within acceptable thresholds (while acknowledging uncertainty versus surgery). 
+
+In EU practice, the Ryeqo SmPC indicates use for symptomatic treatment of endometriosis in women with a history of previous medical or surgical treatment; it recommends DXA after 1 year (or before starting if risk factors) and specifies non-hormonal contraception for at least 1 month after initiation. 
+
+Linzagolix (with hormonal add-back therapy for endometriosis pathways)
+EDELWEISS 3 (Phase 3; n=486) randomised patients to placebo, 75 mg linzagolix alone, or 200 mg linzagolix with add-back therapy. The publication reports improved quality of life and pain outcomes, with add-back therapy intended to minimise vasomotor symptoms and bone loss risk; the paper provides detailed patient-reported outcomes (including EHP-30) and adverse-event rates, with hot flushes higher than placebo but overall TEAEs mostly mild/moderate. 
+
+NICE TA1067 (June 2025) recommends linzagolix with hormonal add-back therapy for endometriosis symptoms in adults of reproductive age who have had prior medical or surgical treatment, concluding sufficient value for money and mandating NHS funding timelines. 
+
+Elagolix
+Elagolix is not currently positioned in England’s NICE technology appraisals for endometriosis in the way relugolix/linzagolix are, but it remains important for global evidence synthesis. The FDA label documents two pivotal six-month placebo-controlled trials (EM-1 and EM-2) with clinically meaningful responder rate improvements for dysmenorrhoea and non-menstrual pelvic pain at 3 months, and dose-related adverse events (notably hot flushes) and bone-density loss driving duration limits (e.g., 24 months for 150 mg once daily vs 6 months for 200 mg twice daily, per Table 1 in the label). 
+
+Aromatase inhibitors, danazol, and other agents
+ESHRE recommends aromatase inhibitors for endometriosis-associated pain refractory to other medical or surgical treatments, including use in combination with other hormonal agents, reflecting a “salvage/tertiary” positioning driven by side-effect burden and limited long-term data. 
+
+The Irish guideline similarly positions aromatase inhibitors as an option mainly after other treatments are exhausted and notes licensing limitations and adverse-effect concerns (including hypo-oestrogenic symptoms and bone mineral density loss). 
+
+Older androgenic agents (danazol, gestrinone) appear primarily in older evidence syntheses, and modern guidelines rarely position them as preferred therapies because their adverse-effect profiles (and, for some agents, regulatory availability) are less favourable compared with contemporary options. Cochrane evidence summaries highlight differential adverse events, including weight gain with danazol and hot flushes with GnRH analogues/gestrinone. 
+
+Recurrence, long-term management, and cost/health-system considerations
+Recurrence and relapse prevention
+Relapse after surgical treatment is common enough that guidelines now treat post-operative management as integral rather than optional. The Irish guideline reports symptom relapse in ~40–45% of women after surgery and notes that up to ~30% may undergo further surgery within five years—figures that are clinically plausible but also reflect variability in definitions, severities, and follow-up methods across studies. 
+
+Systematic review evidence supports post-operative hormonal suppression in those not immediately pursuing pregnancy. A meta-analysis reports substantially reduced recurrence risk with post-operative hormonal suppression versus expectant management/placebo (RR ~0.41), with lower pain scores as a secondary outcome signal—supporting the logic of “surgery plus maintenance suppression” where compatible with patient goals. 
+
+Cost-effectiveness and service design
+The strongest cost-effectiveness evidence located in this review is from the UK HTA programme: the PRE-EMPT pragmatic randomised trial (n=405) compared long-acting progestogen-based strategies (depot medroxyprogesterone acetate or LNG-IUS) versus COCP after conservative endometriosis surgery over 36 months. Pain improvements were substantial in both groups (~40% improvement) with no difference in the primary pain outcome; there were fewer additional surgical/second-line interventions in the long-acting progestogen arm (HR ~0.67). Economic analysis suggested marginal differences: the COCP strategy produced slightly higher QALYs but at additional cost per woman, and differences were described as small—supporting preference-sensitive choices rather than a single mandated option. 
+
+In England, NICE technology appraisals for relugolix combination therapy (TA1057) and linzagolix with add-back therapy (TA1067) explicitly conclude that each provides “value for money” for adults of reproductive age after prior medical/surgical treatment and require NHS funding within set timelines. 
+
+From a practical commissioning standpoint, these decisions matter because they embed oral GnRH antagonists within NHS-accessible escalation pathways rather than leaving them solely as privately financed options. 
+
+In Ireland, the national services framework is unusually explicit about tiering and access criteria. It frames primary care as the default entry point; it sets a 6-month interval of unsuccessful hormonal/analgesic management (or prioritised pregnancy or intolerance) as triggers for escalation; and it defines supra-regional specialist services prioritised for severe disease including bowel/urinary tract involvement, with consultant-to-consultant referral and MDT review. 
+
+This is, in effect, a “capacity rationalisation” framework—clinically sensible given the steep skill and resource gradient between superficial disease management and complex deep endometriosis surgery. 
+
+Comparative tables of key trials and outcomes
+Key trials and major high-quality studies
+Study	Design and population	Interventions	Primary outcomes	Key results (selected)	Main limitations
+EM-1 & EM-2 (elagolix)	Two 6‑month, randomised, double-blind, placebo-controlled trials; adults with moderate–severe endometriosis pain	Elagolix 150 mg OD or 200 mg BD vs placebo	Dysmenorrhoea and non-menstrual pelvic pain responders	Month 3 responder rates: dysmenorrhoea 46–76% vs 20–23% placebo; non-menstrual pelvic pain 50–58% vs 36–37% placebo. Hot flushes dose-related (24% OD; 46% BD vs 9% placebo). Duration limits tied to bone loss. 
+Bone density loss drives dose/duration limits; generalisability to long-term maintenance depends on extension and real-world adherence. 
+S1 & S2 (relugolix combination therapy; Myfembree label)	Two randomised, placebo-controlled trials; endometriosis confirmed by visualisation; n≈212/205 active per trial	Relugolix + E2/NETA vs placebo	Dysmenorrhoea and non-menstrual pelvic pain responders at Week 24	Dysmenorrhoea responders ~74.5–75.1% vs 26.9–30.5%; NMPP responders ~58.5–65.9% vs 39.6–42.5%; EHP‑30 pain domain improved vs placebo. 
+Duration limited (label: 24 months) because of bone loss risk; oestrogen–progestin contraindications apply. 
+SPIRIT LTE (relugolix combination therapy; Becker 2024)	Open-label single-arm extension up to 104 weeks in completers of pivotal trials	Continued relugolix combination therapy	Responder proportions at Week 52 and Week 104/EOT	Week 104/EOT responders: dysmenorrhoea 84.8%, NMPP 75.8%; opioid-free 91% and analgesic-free 75% at Week 104; BMD loss <1% early then plateaued. 
+No control group during extension; attrition over time; limited comparative data vs other hormonal strategies. 
+EDELWEISS 3 (linzagolix)	Phase 3 multinational RCT; n=486 moderate–severe pain	75 mg linzagolix alone; 200 mg linzagolix + add-back; vs placebo	Endometriosis-associated pain measures and quality of life	Reported improvements in pain and EHP‑30; add-back intended to mitigate vasomotor symptoms and bone loss; TEAEs mostly mild/moderate; hot flushes higher than placebo; BMD change <1% in groups at 6 months in this report. 
+6‑month placebo-controlled period; longer-term outcomes require extension/real-world monitoring. 
+PRE-EMPT (UK HTA)	Pragmatic multicentre open RCT + economic evaluation; n=405 post conservative surgery	Long-acting progestogen strategy (DMPA or 52 mg LNG‑IUS) vs COCP	EHP‑30 pain domain at 36 months; cost/QALY	No difference in pain domain; fewer further surgical/second-line treatments in long-acting group (HR ~0.67); small cost/QALY differences; preference-sensitive conclusion. 
+No “no-treatment” arm; treatment switching over follow-up; pandemic effects on subsequent care. 
+ENDORE (Roman 2018)	Randomised trial; n=60 deep rectal endometriosis (>20 mm; up to 50% circumference)	Conservative rectal surgery (shaving/disc) vs segmental resection	Digestive and urinary functional outcomes at 24 months	No significant differences in functional outcomes; segmental resection associated with risk of bowel stenosis; counselling needed re persistent dysfunction. 
+Powered for assumed large effect; limited to large rectal nodules; not generalisable to smaller lesions. 
+BSGE specialist-centre cohort (BMJ Open 2018)	Prospective multicentre cohort; planned laparoscopic excision in 4,721 cases	Laparoscopic excision of rectovaginal endometriosis	Pain symptoms; EuroQol QoL; complications	Multi-domain pain reductions and QoL gain sustained to 2 years; complication rate 6.8%; GI and urinary tract complications each ~1%. 
+Non-randomised; centre/surgeon expertise may not generalise to low-volume settings. 
+
+Comparative outcomes for oral GnRH antagonists at placebo-controlled timepoints
+Agent / regimen	Timepoint	Dysmenorrhoea responder difference vs placebo	NMPP responder difference vs placebo	Notable safety constraints
+Elagolix 150 mg OD / 200 mg BD	Month 3	Absolute responder advantages ranging ~+21% to +56% depending on study and dose	Absolute responder advantages ~+13% to +21%	Dose/duration limits due to bone loss; hot flushes dose-related; mood warnings noted in label. 
+Relugolix + E2/NETA (S1/S2)	Week 24	Absolute advantages ~+44.6% to +47.6%	Absolute advantages ~+18.9% to +23.4%	Oestrogen–progestin thromboembolic warnings/contraindications; bone loss monitoring; labelled duration limit in US (24 months). 
+Linzagolix 200 mg + add-back (EDELWEISS 3)	6 months	Reported clinically meaningful improvement vs placebo	Reported clinically meaningful improvement vs placebo	Hypo-oestrogenic effects mitigated by add-back; monitoring of BMD and vasomotor symptoms central. 
+
+Clinical implications and evidence gaps
+The modern guideline consensus is strong on structure (early empiric management, imaging, and tiered specialist referral) and strong on principles (shared decision-making and matching treatment to fertility goals), but it remains weaker on certain optimisation questions: (i) excision vs ablation superiority for pain in mild disease, (ii) the “best” bowel technique for all deep rectal lesions, (iii) comparative effectiveness between modern medical options (e.g., oral GnRH antagonists vs progestogens/CHC in head-to-head RCTs), and (iv) long-term outcomes beyond 2 years for newer agents in broad routine practice. 
+
+One especially important gap—clinically and academically—is the limited availability of treatments that relieve symptoms without suppressing ovulation or constraining conception timelines. Current fertility-priority recommendations explicitly discourage hormonal suppression for improving spontaneous pregnancy rates, forcing a recurring practical choice between symptom control and fertility attempts. This is why early joint planning between endometriosis and fertility services is emphasised in both NICE and Irish pathways. 
+
+Finally, the service-design evidence from Ireland’s 2025 framework (explicit tier criteria and MDT structures) reflects an implicit but critical truth: outcomes for complex endometriosis are tightly linked to system capacity, specialist concentration, and referral discipline. Even the best surgical technique is unlikely to deliver consistent outcomes if performed outside an appropriately resourced, high-volume multidisciplinary setting.

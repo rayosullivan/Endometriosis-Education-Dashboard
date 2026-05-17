@@ -48,6 +48,11 @@ export default function HomePage() {
                     {t("hero.check_symptoms")}
                   </Button>
                 </Link>
+                <Link href="/pitch-deck">
+                  <Button size="lg" variant="secondary" className="gap-2 h-12 px-8 text-base bg-background/50 backdrop-blur">
+                    Application Features
+                  </Button>
+                </Link>
               </div>
               <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                  <Link href="/chat">
@@ -139,8 +144,15 @@ export default function HomePage() {
                 </Link>
               </CardFooter>
             </Card>
+            </motion.div>
 
-            <Card className="border-none shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-shadow">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <Card className="border-none shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-shadow h-full">
               <CardHeader>
                 <MessageCircle className="h-10 w-10 text-accent-foreground mb-2" />
                 <CardTitle className="font-serif">{t("card.rag.title")}</CardTitle>

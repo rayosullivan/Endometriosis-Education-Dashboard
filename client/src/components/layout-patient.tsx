@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, BookOpen, MessageCircle, Activity, Heart, ShieldAlert, Globe } from "lucide-react";
+import { Menu, BookOpen, MessageCircle, Activity, Heart, ShieldAlert, Globe, Microscope } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -16,6 +16,7 @@ export default function LayoutPatient({ children }: { children: React.ReactNode 
     { href: "/symptom-check", label: t("nav.symptom_checker"), icon: Activity },
     { href: "/chat", label: t("nav.care_assistant"), icon: MessageCircle },
     { href: "/learn", label: t("nav.learn"), icon: BookOpen },
+    { href: "/news", label: "Research", icon: Microscope },
     { href: "/user-guide", label: "User Guide", icon: ShieldAlert },
   ];
 

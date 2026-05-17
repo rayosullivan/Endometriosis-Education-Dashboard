@@ -83,13 +83,16 @@ export default function ChatAssistantPage() {
     if (lowerInput.match(/\b(symptom|symptoms|pain|cramp|cramps|hurt|hurts|ache)\b/)) {
       return MOCK_RESPONSES.symptoms;
     }
-    if (lowerInput.match(/\b(treat|treatment|medication|pill|nsaid|hormone|manage)\b/)) {
+    if (lowerInput.match(/\b(diagnose|diagnosis|test|ultrasound|scan|find out|diagnosed)\b/)) {
+      return MOCK_RESPONSES.diagnosis;
+    }
+    if (lowerInput.match(/\b(treat|treatment|medication|pill|nsaid|hormone|manage|gnrh)\b/)) {
       return MOCK_RESPONSES.treatment;
     }
-    if (lowerInput.match(/\b(surgery|laparoscopy|excision|ablation|operate)\b/)) {
+    if (lowerInput.match(/\b(surgery|laparoscopy|excision|ablation|operate|operation)\b/)) {
       return MOCK_RESPONSES.surgery;
     }
-    if (lowerInput.match(/\b(fertility|pregnant|pregnancy|baby|conceive)\b/)) {
+    if (lowerInput.match(/\b(fertility|pregnant|pregnancy|baby|conceive|ivf)\b/)) {
       return MOCK_RESPONSES.fertility;
     }
     if (lowerInput.match(/\b(hard|difficult|struggle|frustrating|tired|exhausting)\b/)) {

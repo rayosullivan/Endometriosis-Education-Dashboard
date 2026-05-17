@@ -135,17 +135,37 @@ export default function SymptomCheckPage() {
     switch (currentStepIndex) {
       case 0: // Welcome
         return (
-          <div className="space-y-6 text-center py-8">
+          <div className="space-y-8 text-center py-8">
             <div className="mx-auto bg-primary/10 p-6 rounded-full w-fit">
               <Activity className="h-12 w-12 text-primary" />
             </div>
-            <h2 className="text-3xl font-serif font-bold">Endometriosis Symptom Assessment</h2>
-            <p className="text-muted-foreground text-lg max-w-md mx-auto">
-              This tool uses the ENDOPAIN-4D framework to assess your symptoms and estimate your risk profile. It is not a medical diagnosis.
-            </p>
-            <Button size="lg" onClick={handleNext} className="mt-4 w-full sm:w-auto">
+            <div className="space-y-4">
+              <h2 className="text-3xl font-serif font-bold">Endometriosis Symptom Assessment</h2>
+              <p className="text-muted-foreground text-lg max-w-md mx-auto">
+                This tool uses the ENDOPAIN-4D framework to systematically evaluate your symptoms across four key dimensions: pain, bowel, sexual, and urinary symptoms.
+              </p>
+            </div>
+            
+            <div className="bg-muted/30 p-6 rounded-xl text-left space-y-4 max-w-lg mx-auto border border-border/50">
+              <h3 className="font-semibold flex items-center gap-2">
+                <FileText className="h-4 w-4 text-primary" /> 
+                How it works
+              </h3>
+              <ul className="text-sm text-muted-foreground space-y-2 list-disc list-inside">
+                <li>Answer questions about your symptoms and their severity</li>
+                <li>The system calculates an estimated risk profile</li>
+                <li>Generate a structured PDF report or GP Referral Letter</li>
+                <li>Share the results directly with your healthcare provider to accelerate diagnosis</li>
+              </ul>
+            </div>
+
+            <Button size="lg" onClick={handleNext} className="w-full sm:w-auto mt-4">
               Start Assessment <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
+            
+            <p className="text-xs text-muted-foreground mt-4">
+              Disclaimer: This is not a medical diagnosis. Always consult with a healthcare professional.
+            </p>
           </div>
         );
 

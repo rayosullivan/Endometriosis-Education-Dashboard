@@ -13,6 +13,8 @@ import LoginPage from "@/pages/login";
 import PatientDashboard from "@/pages/patient-dashboard";
 import LearnPage from "@/pages/learn";
 import UserGuidePage from "@/pages/user-guide";
+import PitchDeckPage from "@/pages/pitch-deck";
+import NewsPage from "@/pages/news";
 
 function Router() {
   return (
@@ -22,6 +24,8 @@ function Router() {
       <Route path="/patient/dashboard" component={PatientDashboard} />
       <Route path="/learn" component={LearnPage} />
       <Route path="/user-guide" component={UserGuidePage} />
+      <Route path="/pitch-deck" component={PitchDeckPage} />
+      <Route path="/news" component={NewsPage} />
       
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/symptom-check" component={SymptomCheckPage} />
